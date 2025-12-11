@@ -1,17 +1,20 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import useAuth from '../../../Hooks/UseAuth';
+import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
-// import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+
+
 
 const Register = () => {
+    
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { registerUser, updateUserProfile } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    // const axiosSecure = useAxiosSecure();
+    const axiosSecure = useAxiosSecure();
 
     console.log('in register', location)
 
@@ -34,6 +37,10 @@ const Register = () => {
                 // send the pohoto to store and get the url
                 const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
 
+
+
+
+
                 axios.post(image_API_URL, formData)
                     .then(res => {
                         const photoURL = res.data.data.url;
@@ -43,26 +50,31 @@ const Register = () => {
                             email: data.email,
                             displayName: data.name,
                             photoURL: photoURL,
-                        }
+                        };
+
                         axiosSecure.post('/users', userInfo)
                             .then(res => {
                                 if (res.data.insertedId) {
                                     console.log('user created in the database');
                                 }
-                            })
+                            });
 
-                        //update user profile to firebase
+                        // update user profile to firebase
                         const userProfile = {
                             displayName: data.name,
                             photoURL: photoURL
-                        }
+                        };
+
                         updateUserProfile(userProfile)
                             .then(() => {
-                                console.log('user profile updated done')
+                                console.log('user profile updated done');
                                 navigate(location.state || '/');
                             })
-                            .catch(error => console.log(error))
-                    })
+                            .catch(error => console.log(error));
+                    });
+
+
+
             })
             .catch(error => {
                 console.log(error)

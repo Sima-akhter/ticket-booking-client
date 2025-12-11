@@ -1,101 +1,29 @@
-// import React from 'react'
-
-// import { Link, NavLink } from 'react-router'
-// import Logo from '../../../components/Logo/Logo'
-// // import useAuth from '../../../Hooks/UseAuth'
-
-// const Navbar = () => {
-// //   const {user, logOut} = useAuth();
-// //   const handleLogOut = () =>{
-// //     logOut()
-// //     .then()
-// //     .catch(error =>{
-// //       console.log(error)
-// //     })
-// //   }
-
-//   const links = <>
-//     <li className='font-bold'><NavLink to="" >Home</NavLink></li>
-//     <li className='font-bold'><NavLink to="">All Tickets</NavLink></li>
-
-//     {/* <li><NavLink to="/send-parcel">Send Parcel</NavLink></li>
-//     <li><NavLink to="/raider">Be a Rider</NavLink></li>
-//     <li><NavLink to="/coverage">Coverage</NavLink></li> */}
-
-//     {/* {
-//       user && <>
-//       <li><NavLink to="/dashboard/my-parcels">My Parcels</NavLink></li>
-//       </>
-//     } */}
-
-//   </>
-//   return (
-//     <div>
-
-//       <div className="navbar bg-base-100 shadow-sm">
-//         <div className="navbar-start">
-//           <div className="dropdown">
-//             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-//               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
-//             </div>
-//             <ul
-//               tabIndex="-1"
-//               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-//               {links}
-//             </ul>
-//           </div>
-//           <span className="btn btn-ghost text-xl">
-//             <Logo></Logo>
-//           </span>
-//         </div>
-//         <div className="navbar-center hidden lg:flex">
-//           <ul className="menu menu-horizontal px-1">
-//             {links}
-//           </ul>
-//         </div>
-//         <div className="navbar-end">
-//           {/* {
-//             user ? <a onClick={handleLogOut} className="btn">Log Out</a> : <Link className='btn' to="/login">Log in</Link>
-//           } */}
-
-//           <Link className='btn btn-primary text-black mx-4' to="/rider">Be a Rider</Link>
-//         </div>
-//       </div>
-
-
-//     </div>
-//   )
-// }
-
-// export default Navbar
-
-
-
-
-
-
 
 
 // import { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "../../../components/Logo/Logo";
+import useAuth from "../../../hooks/useAuth";
+import userimg from '../../../assets/user.png'
 // import { toast } from "react-toastify";
 // import userimg from "../assets/user.png";
 // import foodlogo from "../assets/img.png";
 // import { AuthContext } from "../AuthContexts/AuthProvider";
 
 const Navbar = () => {
-//   const { user, logOut } = useContext(AuthContext);
+  const {user, logOut} = useAuth();
 
-//   const handleLogout = () => {
-//     logOut()
-//       .then(() => {
-//         toast.success("You have logged out successfully");
-//       })
-//       .catch((error) => {
-//          toast.error(error.message);
-//       });
-//   };
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+
+        // toast.success("You have logged out successfully");
+      })
+      .catch((error) => {
+        console.log(error)
+        //  toast.error(error.message);
+      });
+  };
 
   const links = (
     <>
@@ -114,27 +42,27 @@ const Navbar = () => {
 
       <li>
         <NavLink
-          to="/allreviews"
+          to="/allTicket"
           className={({ isActive }) =>
             isActive
               ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
               : "text-gray-600 text-lg font-semibold hover:text-purple-600"
           }
         >
-          All Reviews
+          All Tickets
         </NavLink>
       </li>
 
       <li>
         <NavLink
-          to="/recipes"
+          to="/Dashboard"
           className={({ isActive }) =>
             isActive
               ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
               : "text-gray-600 text-lg font-semibold hover:text-purple-600"
           }
         >
-          Recipes
+          Dashboard
         </NavLink>
       </li>
     </>
@@ -180,7 +108,7 @@ const Navbar = () => {
       </div>
 
       {/* User / Login buttons */}
-      {/* <div className="navbar-end gap-3">
+      <div className="navbar-end gap-3">
         {user ? (
           <div className="dropdown dropdown-end">
             <div
@@ -203,19 +131,20 @@ const Navbar = () => {
               </li>
               <div className="divider my-1"></div>
 
+              
               <li>
-                <NavLink to="/addReview">Add Review</NavLink>
+                <NavLink to="/myProfile">My Profile</NavLink>
               </li>
-              <li>
-                <NavLink to="/myreview">My Reviews</NavLink>
-              </li>
-              <li>
-                <NavLink to="/myFavourites">My Favourites</NavLink>
-              </li>
+               <Link
+              to="/login"
+              className="btn bg-primary text-black px-2 lg:px-6"
+            >
+              Login
+            </Link>
 
               <li>
                 <button
-                  onClick={handleLogout}
+                  onClick={handleLogOut}
                   className="text-red-600 font-semibold hover:text-red-700"
                 >
                   Logout
@@ -226,25 +155,24 @@ const Navbar = () => {
         ) : (
           <>
             <Link
-              to="/auth/login"
-              className="btn bg-green-800 hover:bg-green-600 text-white px-2 lg:px-6"
+              to="/login"
+              className="btn bg-primary text-black px-2 lg:px-6"
             >
               Login
             </Link>
 
             <Link
-              to="/auth/register"
-              className="btn bg-green-800 hover:bg-green-600 text-white px-2 lg:px-6"
+              to="/register"
+              className="btn bg-primary  text-black px-2 lg:px-6"
             >
               Register
             </Link>
           </>
         )}
-      </div> */}
+      </div>
       
 
-      <button className="btn btn-primary text-black">login</button>
-      <button className="btn btn-primary text-black">Register</button>
+     
 
     </div>
   );
