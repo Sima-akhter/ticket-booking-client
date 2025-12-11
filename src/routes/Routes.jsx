@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home/Home";
 import AuthLayout from "../Layouts/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
+import AddTicket from "../Pages/Dashboard/AddTicket/AddTicket";
 
 export const router = createBrowserRouter([
     {
@@ -29,11 +30,16 @@ export const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <Register></Register>
-            }
+            },
 
-
+       {
+          path: 'addTicket',
+          element: <AddTicket></AddTicket>
+       }
 
         ]
 
-    }
+    },
+
+
 ]);
