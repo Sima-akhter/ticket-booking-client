@@ -4,7 +4,7 @@ import { Outlet } from 'react-router'
 const Dashboard = () => {
   return (
     <div>
-        <Outlet></Outlet>
+        <h1>dashboard</h1>
     </div>
   )
 }

@@ -7,6 +7,8 @@ import Register from "../Pages/Auth/Register/Register";
 import AddTicket from "../Pages/Dashboard/AddTicket/AddTicket";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import AllTIcket from "../Pages/Dashboard/AllTicket/AllTIcket";
 
 export const router = createBrowserRouter([
     {
@@ -41,13 +43,13 @@ export const router = createBrowserRouter([
     },
 
     {
-        path:'/dashboard',
-        element: <Dashboard></Dashboard>,
+        path:'dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             {
-          path: '/dashboard/addTicket',
+          path: '/dashboard/allTicket',
         
-          element: <AddTicket></AddTicket>
+          element: <AllTIcket></AllTIcket>
        },
 
         ]

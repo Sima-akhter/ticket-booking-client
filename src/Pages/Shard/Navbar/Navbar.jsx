@@ -40,22 +40,11 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      <li>
-        <NavLink
-          to="/allTicket"
-          className={({ isActive }) =>
-            isActive
-              ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
-              : "text-gray-600 text-lg font-semibold hover:text-purple-600"
-          }
-        >
-          All Tickets
-        </NavLink>
-      </li>
+      
 
       <li>
         <NavLink
-          to="/Dashboard"
+          to="Dashboard"
           className={({ isActive }) =>
             isActive
               ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
@@ -65,6 +54,28 @@ const Navbar = () => {
           Dashboard
         </NavLink>
       </li>
+
+
+     {
+        user && <>
+       
+        <li>
+        <NavLink
+          to="/dashboard/allTicket"
+          className={({ isActive }) =>
+            isActive
+              ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
+              : "text-gray-600 text-lg font-semibold hover:text-purple-600"
+          }
+        >
+          All Tickets
+        </NavLink>
+      </li>
+        
+        </>
+     }
+
+
     </>
   );
 
