@@ -9,6 +9,9 @@ const AddTicket = () => {
   const axiosSecure = useAxiosSecure();
 
   const handleAddTicket = async (data) => {
+
+
+
     try {
       const res = await axiosSecure.post("/tickets", data);
       console.log("Ticket Added:", res.data);

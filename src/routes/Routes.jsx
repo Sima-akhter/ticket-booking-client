@@ -4,13 +4,17 @@ import Home from "../Pages/Home/Home/Home";
 import AuthLayout from "../Layouts/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
-import AddTicket from "../Pages/Dashboard/AddTicket/AddTicket";
+// import AddTicket from "../Pages/Dashboard/AddTicket/AddTicket";
 import PrivateRoute from "./PrivateRoute";
 
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AllTIcket from "../Pages/Dashboard/MyBookedTickets/MyBookedTickets";
 import MyBookedTickets from "../Pages/Dashboard/MyBookedTickets/MyBookedTickets";
 import TicketDetails from "../Pages/TicketDetails/TicketDetails";
+import VendorRoute from "./VendorRoute";
+import VendorProfile from "../Pages/Dashboard/Vendor/VendorProfile";
+import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets";
+import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
 
 export const router = createBrowserRouter([
     {
@@ -19,7 +23,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                Component: Home
+                element: <Home></Home>,
             },
             {
                 path: '/ticketDetail/:id',
@@ -67,10 +71,32 @@ export const router = createBrowserRouter([
                 element: <MyBookedTickets></MyBookedTickets>
             },
           
-             {
-          path: 'addTicket',
-          element: <AddTicket></AddTicket>
+        //      {
+        //   path: 'addTicket',
+        //   element: <AddTicket></AddTicket>
+        //  },
+
+         {
+            path: 'vendorProfile',
+            element: <VendorRoute>
+                <VendorProfile></VendorProfile>
+            </VendorRoute>
          },
+
+         {
+            path: 'addTickets',
+            element: <VendorRoute>
+                <AddTicket></AddTicket>
+            </VendorRoute>
+         },
+         {
+            path: 'myAddTickets',
+            element: <VendorRoute>
+                <MyAddedTickets></MyAddedTickets>
+            </VendorRoute>
+         },
+
+         
         ]
     }
 

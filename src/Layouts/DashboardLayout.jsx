@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
+    const { role } = useRole();
     return (
         <div>
 
@@ -18,7 +20,7 @@ const DashboardLayout = () => {
                     </nav>
                     {/* Page content here */}
                     <Outlet></Outlet>
-                    
+
                 </div>
 
                 <div className="drawer-side is-drawer-close:overflow-visible">
@@ -39,9 +41,23 @@ const DashboardLayout = () => {
                             <li>
                                 <NavLink to="/dashboard/MyBookedTickets">My Booked Tickets </NavLink>
                             </li>
-                            <li>
-                                <NavLink to="/dashboard/MyBookedTickets">My Booked Tickets </NavLink>
-                            </li>
+                              
+
+
+                              {/* vendor dashboard link */}
+
+                            {
+                                role == 'vendor' && <>
+
+                                    <li><NavLink to="vendorProfile">Vendor Profile</NavLink></li>
+                                    <li><NavLink to="addTicket">Add Ticket</NavLink></li>
+                                    <li><NavLink to="myTickets">My Added Tickets</NavLink></li>
+                                    <li><NavLink to="requestedBookings">Requested Bookings</NavLink></li>
+                                    <li><NavLink to="revenue">Revenue Overview</NavLink></li>
+
+                                </>
+                            }
+
 
 
                             {/* List item */}
