@@ -37,7 +37,10 @@ const DashboardLayout = () => {
 
                             {/* our dashboard links */}
                             <li>
-                                <NavLink to="dashboard/allTicket">All Ticket</NavLink>
+                                <NavLink to="/dashboard/MyBookedTickets">My Booked Tickets </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/MyBookedTickets">My Booked Tickets </NavLink>
                             </li>
 
 

@@ -58,7 +58,7 @@ const Login = () => {
         state={location.state}
          className='text-blue-500 underline' to="/register">Register</Link></p>
       </form>
-      <SocialLogin></SocialLogin>
+      <SocialLogin to="/"></SocialLogin>
     </div>
     </div>
   )

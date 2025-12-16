@@ -6,9 +6,11 @@ import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
 import AddTicket from "../Pages/Dashboard/AddTicket/AddTicket";
 import PrivateRoute from "./PrivateRoute";
-import Dashboard from "../Pages/Dashboard/Dashboard";
+
 import DashboardLayout from "../Layouts/DashboardLayout";
-import AllTIcket from "../Pages/Dashboard/AllTicket/AllTIcket";
+import AllTIcket from "../Pages/Dashboard/MyBookedTickets/MyBookedTickets";
+import MyBookedTickets from "../Pages/Dashboard/MyBookedTickets/MyBookedTickets";
+import TicketDetails from "../Pages/TicketDetails/TicketDetails";
 
 export const router = createBrowserRouter([
     {
@@ -18,6 +20,12 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path: '/ticketDetail/:id',
+                element: <PrivateRoute>
+                    <TicketDetails></TicketDetails>
+                </PrivateRoute>
             }
         ]
     },
@@ -36,9 +44,16 @@ export const router = createBrowserRouter([
                 element: <Register></Register>
             },
 
-       
 
-        ]
+            {
+               
+          path: 'allTicket',
+        
+          element: <PrivateRoute><AllTIcket></AllTIcket></PrivateRoute>
+       
+            },
+
+         ]
 
     },
 
@@ -46,12 +61,16 @@ export const router = createBrowserRouter([
         path:'dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
-            {
-          path: '/dashboard/allTicket',
-        
-          element: <AllTIcket></AllTIcket>
-       },
 
+            {
+                path: 'MyBookedTickets',
+                element: <MyBookedTickets></MyBookedTickets>
+            },
+          
+             {
+          path: 'addTicket',
+          element: <AddTicket></AddTicket>
+         },
         ]
     }
 
