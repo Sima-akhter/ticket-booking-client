@@ -25,11 +25,11 @@
 //     console.log(ticket);
     
 
-//     // fetch("http://localhost:3000/tickets", {
-//     //   method: "POST",
-//     //   headers: { "content-type": "application/json" },
-//     //   body: JSON.stringify(ticket),
-//     // });
+//     fetch("http://localhost:3000/tickets", {
+//       method: "POST",
+//       headers: { "content-type": "application/json" },
+//       body: JSON.stringify(ticket),
+//     });
 //   };
 
 //   return (
@@ -66,15 +66,16 @@ const AddTicket = () => {
   const axiosSecure = useAxiosSecure();
 
   const handleAddTicket = async (data) => {
+    console.log(data)
 
 
 
-    try {
-      const res = await axiosSecure.post("/tickets", data);
-      console.log("Ticket Added:", res.data);
-    } catch (error) {
-      console.error("Error adding ticket:", error);
-    }
+    // try {
+    //   const res = await axiosSecure.post("/tickets", data);
+    //   console.log("Ticket Added:", res.data);
+    // } catch (error) {
+    //   console.error("Error adding ticket:", error);
+    // }
   };
 
   return (

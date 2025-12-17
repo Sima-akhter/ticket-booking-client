@@ -15,6 +15,7 @@ import VendorRoute from "./VendorRoute";
 import VendorProfile from "../Pages/Dashboard/Vendor/VendorProfile";
 import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets";
 import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
+import RequestedBookings from "../Pages/Dashboard/Vendor/RequestedBookings";
 
 export const router = createBrowserRouter([
     {
@@ -86,6 +87,12 @@ export const router = createBrowserRouter([
          {
             path: 'myAddTickets',
             element: <MyAddedTickets></MyAddedTickets>
+                
+            
+         },
+         {
+            path: 'requestedBookings',
+            element: <RequestedBookings></RequestedBookings>
                 
             
          },
