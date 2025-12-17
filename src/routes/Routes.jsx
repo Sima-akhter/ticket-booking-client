@@ -71,29 +71,23 @@ export const router = createBrowserRouter([
                 element: <MyBookedTickets></MyBookedTickets>
             },
           
-        //      {
-        //   path: 'addTicket',
-        //   element: <AddTicket></AddTicket>
-        //  },
 
          {
             path: 'vendorProfile',
-            element: <VendorRoute>
-                <VendorProfile></VendorProfile>
-            </VendorRoute>
+            element:  <VendorProfile></VendorProfile>
          },
+
+         
 
          {
             path: 'addTickets',
-            element: <VendorRoute>
-                <AddTicket></AddTicket>
-            </VendorRoute>
+            element: <AddTicket></AddTicket>
          },
          {
             path: 'myAddTickets',
-            element: <VendorRoute>
-                <MyAddedTickets></MyAddedTickets>
-            </VendorRoute>
+            element: <MyAddedTickets></MyAddedTickets>
+                
+            
          },
 
          

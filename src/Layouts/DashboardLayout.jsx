@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
-import useRole from '../hooks/useRole';
+// import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
-    const { role } = useRole();
+    // const { role } = useRole();
     return (
         <div>
 
@@ -41,23 +41,23 @@ const DashboardLayout = () => {
                             <li>
                                 <NavLink to="/dashboard/MyBookedTickets">My Booked Tickets </NavLink>
                             </li>
-                              
 
 
-                              {/* vendor dashboard link */}
 
-                            {
+                            {/* vendor dashboard link */}
+
+                            {/* {
                                 role == 'vendor' && <>
 
-                                    <li><NavLink to="vendorProfile">Vendor Profile</NavLink></li>
-                                    <li><NavLink to="addTicket">Add Ticket</NavLink></li>
-                                    <li><NavLink to="myTickets">My Added Tickets</NavLink></li>
-                                    <li><NavLink to="requestedBookings">Requested Bookings</NavLink></li>
-                                    <li><NavLink to="revenue">Revenue Overview</NavLink></li>
+                                    
 
                                 </>
-                            }
+                            } */}
 
+                            
+                            <li><NavLink to="/dashboard/vendorProfile">Vendor Profile</NavLink></li>
+                            <li><NavLink to="/dashboard/addTickets">Add Ticket</NavLink></li>
+                            <li><NavLink to="/dashboard/myAddTickets">My Added Tickets</NavLink></li>
 
 
                             {/* List item */}
