@@ -1,9 +1,10 @@
 import React from 'react'
+import { FaChartBar, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaTicketAlt, FaUser, FaUserTie } from 'react-icons/fa'
 import { Link, NavLink, Outlet } from 'react-router'
-// import useRole from '../hooks/useRole';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
-    // const { role } = useRole();
+    const { role } = useRole();
     return (
         <div>
 
@@ -39,27 +40,71 @@ const DashboardLayout = () => {
 
                             {/* our dashboard links */}
                             <li>
-                                <NavLink to="/dashboard/MyBookedTickets">My Booked Tickets </NavLink>
+                                <NavLink to="/dashboard/userProfile" className="flex gap-2 items-center">
+                                    <FaUser /> User Profile
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to="/dashboard/myBookedTickets" className="flex gap-2 items-center">
+                                    <FaTicketAlt /> My Booked Tickets
+                                </NavLink>
+                            </li>
+
+                            <li>
+                                <NavLink to="/dashboard/transactions" className="flex gap-2 items-center">
+                                    <FaMoneyCheckAlt /> Transaction History
+                                </NavLink>
                             </li>
 
 
 
                             {/* vendor dashboard link */}
 
-                            {/* {
+                            {
                                 role == 'vendor' && <>
 
-                                    
+                                    <li>
+                                        <NavLink to="/dashboard/vendorProfile" className="flex items-center gap-2">
+                                            <FaUserTie />
+                                            <span>Vendor Profile</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink to="/dashboard/addTickets" className="flex items-center gap-2">
+                                            <FaPlusCircle />
+                                            <span>Add Ticket</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink to="/dashboard/myAddTickets" className="flex items-center gap-2">
+                                            <FaTicketAlt />
+                                            <span>My Added Tickets</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink to="/dashboard/requestedBookings" className="flex items-center gap-2">
+                                            <FaClipboardList />
+                                            <span>Requested Bookings</span>
+                                        </NavLink>
+                                    </li>
+
+                                    <li>
+                                        <NavLink to="/dashboard/revenueOverview" className="flex items-center gap-2">
+                                            <FaChartBar />
+                                            <span>Revenue Overview</span>
+                                        </NavLink>
+                                    </li>
+
 
                                 </>
-                            } */}
+                            }
 
-                            
-                            <li><NavLink to="/dashboard/vendorProfile">Vendor Profile</NavLink></li>
-                            <li><NavLink to="/dashboard/addTickets">Add Ticket</NavLink></li>
-                            <li><NavLink to="/dashboard/myAddTickets">My Added Tickets</NavLink></li>
-                            <li><NavLink to="/dashboard/requestedBookings">Requested Bookings</NavLink></li>
-                            <li><NavLink to="/dashboard/revenueOverview">Revenue Over view</NavLink></li>
+
+
 
 
                             {/* List item */}

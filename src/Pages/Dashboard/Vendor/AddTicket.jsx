@@ -1,60 +1,4 @@
 
-
-// import useAuth from "../../../hooks/useAuth";
-
-// const AddTicket = () => {
-//   const { user } = useAuth();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const form = e.target;
-
-//     const ticket = {
-//       ticketTitle: form.title.value,
-//       from: form.from.value,
-//       to: form.to.value,
-//       transportType: form.transport.value,
-//       price: form.price.value,
-//       ticketQuantity: form.quantity.value,
-//       departureDateTime: form.datetime.value,
-//       perks: form.perks.value.split(","),
-//       imageUrl: form.image.value,
-//       vendorName: user.displayName,
-//       vendorEmail: user.email,
-//     };
-//     console.log(ticket);
-    
-
-//     fetch("http://localhost:3000/tickets", {
-//       method: "POST",
-//       headers: { "content-type": "application/json" },
-//       body: JSON.stringify(ticket),
-//     });
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-//       <input name="title" placeholder="Ticket Title" />
-//       <input name="from" placeholder="From" />
-//       <input name="to" placeholder="To" />
-//       <input name="transport" placeholder="Transport Type" />
-//       <input name="price" placeholder="Price" />
-//       <input name="quantity" placeholder="Quantity" />
-//       <input name="datetime" type="datetime-local" />
-//       <input name="perks" placeholder="AC, WiFi" />
-//       <input name="image" placeholder="Image URL" />
-//       <input value={user.displayName} readOnly />
-//       <input value={user.email} readOnly />
-//       <button className="btn btn-primary col-span-2">Add Ticket</button>
-//     </form>
-//   );
-// };
-
-// export default AddTicket;
-
-
-
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
@@ -66,16 +10,16 @@ const AddTicket = () => {
   const axiosSecure = useAxiosSecure();
 
   const handleAddTicket = async (data) => {
-    console.log(data)
+//    const {ticketTitle, from, to, transportType, price, ticketQuantity, departureDateTime, AC, NonAC,} = data
 
 
 
-    // try {
-    //   const res = await axiosSecure.post("/tickets", data);
-    //   console.log("Ticket Added:", res.data);
-    // } catch (error) {
-    //   console.error("Error adding ticket:", error);
-    // }
+    try {
+      const res = await axiosSecure.post("/tickets", data);
+      console.log("Ticket Added:", res.data);
+    } catch (error) {
+      console.error("Error adding ticket:", error);
+    }
   };
 
   return (

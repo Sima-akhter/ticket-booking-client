@@ -4,12 +4,8 @@ import Home from "../Pages/Home/Home/Home";
 import AuthLayout from "../Layouts/AuthLayout";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
-// import AddTicket from "../Pages/Dashboard/AddTicket/AddTicket";
 import PrivateRoute from "./PrivateRoute";
-
 import DashboardLayout from "../Layouts/DashboardLayout";
-import AllTIcket from "../Pages/Dashboard/MyBookedTickets/MyBookedTickets";
-import MyBookedTickets from "../Pages/Dashboard/MyBookedTickets/MyBookedTickets";
 import TicketDetails from "../Pages/TicketDetails/TicketDetails";
 import VendorRoute from "./VendorRoute";
 import VendorProfile from "../Pages/Dashboard/Vendor/VendorProfile";
@@ -17,6 +13,10 @@ import MyAddedTickets from "../Pages/Dashboard/Vendor/MyAddTickets";
 import AddTicket from "../Pages/Dashboard/Vendor/AddTicket";
 import RequestedBookings from "../Pages/Dashboard/Vendor/RequestedBookings";
 import RevenueOverview from "../Pages/Dashboard/Vendor/RevenueOverview";
+import UserProfile from "../Pages/Dashboard/user/UserProfile";
+import MyBookedTickets from "../Pages/Dashboard/user/MyBookedTickets";
+import TransactionHistory from "../Pages/Dashboard/user/TransactionHistory";
+import AllTickets from "../Pages/AllTickets";
 
 export const router = createBrowserRouter([
     {
@@ -38,11 +38,11 @@ export const router = createBrowserRouter([
 
     {
         path: '/',
-        element:<AuthLayout></AuthLayout>,
+        element: <AuthLayout></AuthLayout>,
         children: [
             {
-              path: 'login' ,
-              element: <Login></Login>
+                path: 'login',
+                element: <Login></Login>
             },
 
             {
@@ -52,59 +52,65 @@ export const router = createBrowserRouter([
 
 
             {
-               
-          path: 'allTicket',
-        
-          element: <PrivateRoute><AllTIcket></AllTIcket></PrivateRoute>
-       
+
+                path: 'allTickets',
+
+                element: <PrivateRoute><AllTickets></AllTickets></PrivateRoute>
+
             },
 
-         ]
+        ]
 
     },
 
     {
-        path:'dashboard',
+        path: 'dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
 
             {
-                path: 'MyBookedTickets',
-                element: <MyBookedTickets></MyBookedTickets>
+                path: "userProfile",
+                element: <UserProfile />
             },
-          
+            {
+                path: "myBookedTickets",
+                element: <MyBookedTickets />
+            },
+            {
+                path: "transactions",
+                element: <TransactionHistory />
+            },
 
+          // only vendor route
          {
-            path: 'vendorProfile',
-            element:  <VendorProfile></VendorProfile>
-         },
+                path: 'vendorProfile',
+                element: <VendorRoute><VendorProfile></VendorProfile></VendorRoute>
+            },
 
-         
+            {
+                path: 'addTickets',
+                element: <VendorRoute><AddTicket></AddTicket></VendorRoute>
+            },
+            {
+                path: 'myAddTickets',
+                element: <VendorRoute><MyAddedTickets></MyAddedTickets></VendorRoute>
 
-         {
-            path: 'addTickets',
-            element: <AddTicket></AddTicket>
-         },
-         {
-            path: 'myAddTickets',
-            element: <MyAddedTickets></MyAddedTickets>
-                
-            
-         },
-         {
-            path: 'requestedBookings',
-            element: <RequestedBookings></RequestedBookings>
-                
-            
-         },
-         {
-            path: 'revenueOverview',
-            element: <RevenueOverview></RevenueOverview>
-                
-            
-         },
 
-         
+            },
+            {
+                path: 'requestedBookings',
+                element: <VendorRoute><RequestedBookings></RequestedBookings></VendorRoute>
+
+
+            },
+            {
+                path: 'revenueOverview',
+                element: <VendorRoute><RevenueOverview></RevenueOverview></VendorRoute>
+
+
+            },
+
+
         ]
     }
 

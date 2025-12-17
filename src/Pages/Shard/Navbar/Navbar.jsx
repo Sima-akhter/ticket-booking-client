@@ -50,7 +50,7 @@ const Navbar = () => {
        
         <li>
         <NavLink
-          to="/allTicket"
+          to="/allTickets"
           className={({ isActive }) =>
             isActive
               ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"

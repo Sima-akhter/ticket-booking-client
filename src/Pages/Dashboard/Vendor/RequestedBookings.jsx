@@ -64,7 +64,7 @@ const RequestedBookings = () => {
                 <td>{booking.bookingQuantity}</td>
 
                 <td>
-                  {booking.unitPrice * booking.bookingQuantity} ৳
+                  {booking.unitPrice * booking.bookingQuantity} TK
                 </td>
 
                 <td className="space-x-2">
