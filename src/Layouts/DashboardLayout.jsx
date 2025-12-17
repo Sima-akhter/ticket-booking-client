@@ -59,6 +59,7 @@ const DashboardLayout = () => {
                             <li><NavLink to="/dashboard/addTickets">Add Ticket</NavLink></li>
                             <li><NavLink to="/dashboard/myAddTickets">My Added Tickets</NavLink></li>
                             <li><NavLink to="/dashboard/requestedBookings">Requested Bookings</NavLink></li>
+                            <li><NavLink to="/dashboard/revenueOverview">Revenue Over view</NavLink></li>
 
 
                             {/* List item */}
