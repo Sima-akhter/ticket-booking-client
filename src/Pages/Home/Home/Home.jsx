@@ -2,6 +2,7 @@ import React from 'react'
 import Banner from '../Banner/Banner'
 import Advertisment from '../../Advertisement/Advertisment'
 import TicketCard from '../../Advertisement/TicketCard'
+import PopularRoutes from '../PopularRoutes/PopularRoutes'
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
             <Banner></Banner>
             <Advertisment></Advertisment>
             <TicketCard></TicketCard>
+            <PopularRoutes></PopularRoutes>
 
         </div>
     </div>
