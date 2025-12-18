@@ -1,17 +1,17 @@
-
-
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 
 const MyAddedTickets = () => {
   const { user } = useAuth();
   const [tickets, setTickets] = useState([]);
-  console.log(setTickets)
 
   useEffect(() => {
-    fetch(`http://localhost:3000/tickets/vendor/${user.email}`)
+    if (!user?.email) return;
+
+    fetch(`http://localhost:5000/tickets?vendorEmail=${user.email}`)
       .then(res => res.json())
-      .then(data => setTickets(data));
+      .then(data => setTickets(data))
+      .catch(err => console.error("Fetch error:", err));
   }, [user]);
 
   return (
