@@ -1,44 +1,70 @@
+import React from 'react';
 import { FaTicketAlt, FaLock, FaCheckCircle, FaHeadset } from "react-icons/fa";
 
 const WhyChooseUs = () => {
   const features = [
     {
       title: "Easy Booking",
-      desc: "Book your tickets in just a few clicks with a smooth user experience.",
-      icon: <FaTicketAlt />,
+      desc: "Book your tickets in just a few clicks with our intuitive and smooth interface.",
+      icon: <FaTicketAlt className="text-5xl" />,
     },
     {
       title: "Secure Payment",
-      desc: "Your payments are fully secure and protected.",
-      icon: <FaLock />,
+      desc: "100% secure transactions with encrypted payment gateways you can trust.",
+      icon: <FaLock className="text-5xl" />,
     },
     {
       title: "Trusted Vendors",
-      desc: "We work only with verified and reliable transport vendors.",
-      icon: <FaCheckCircle />,
+      desc: "Partnered only with verified and reliable transport providers across the country.",
+      icon: <FaCheckCircle className="text-5xl" />,
     },
     {
       title: "24/7 Support",
-      desc: "Our support team is always ready to help you anytime.",
-      icon: <FaHeadset />,
+      desc: "Dedicated customer support team available round the clock for any assistance.",
+      icon: <FaHeadset className="text-5xl" />,
     },
   ];
 
   return (
-    <section className="my-16 bg-gray-50 py-16 px-4">
-      <h2 className="text-3xl font-bold text-center mb-10">Why Choose Us? ⭐</h2>
+    <section className="py-24 px-4 bg-gradient-to-b from-purple-50 to-pink-50 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-4xl md:text-6xl font-extrabold text-center mb-6">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-600">
+            Why Choose TicketBari?
+          </span>
+        </h2>
+        <p className="text-center text-gray-700 text-lg mb-16 max-w-3xl mx-auto">
+          We make travel planning simple, secure, and enjoyable – your perfect journey starts here!
+        </p>
 
-      <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        {features.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl p-6 shadow hover:shadow-lg transition text-center flex flex-col items-center"
-          >
-            <div className="text-5xl text-primary mb-4">{item.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-            <p className="text-gray-600 text-sm">{item.desc}</p>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {features.map((item, index) => (
+            <div
+              key={index}
+              className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-4 transition-all duration-500 text-center border border-purple-100"
+            >
+              {/* Gradient Circle Background for Icon */}
+              <div className="relative inline-block mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative bg-white rounded-full p-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
+                  <div className="text-purple-600 group-hover:text-purple-700">
+                    {item.icon}
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-purple-700 transition-colors duration-300">
+                {item.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {item.desc}
+              </p>
+
+              {/* Subtle Hover Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-500"></div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -7,7 +7,9 @@ const Logo = () => {
     <Link to='/'>
     <div className='flex items-center'>
         <img className='w-[100px] rounded-full' src={logo} alt="" />
-        <h1 className='text-2xl font-bold'>TicketBari</h1>
+        <span className="text-3xl font-extrabold text-white tracking-wide">
+                    TicketBari
+                  </span>
     </div>
     </Link>
   )

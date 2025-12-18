@@ -1,90 +1,78 @@
-
+import React from 'react';
 import { Link, NavLink } from "react-router";
 import Logo from "../../../components/Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
-import userimg from '../../../assets/user.png'
+import userimg from '../../../assets/user.png';
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const {user, logOut} = useAuth();
+  const { user, logOut } = useAuth();
 
   const handleLogOut = () => {
     logOut()
       .then(() => {
-
         toast.success("You have logged out successfully");
       })
       .catch((error) => {
-        console.log(error)
-         toast.error(error.message);
+        console.log(error);
+        toast.error(error.message);
       });
   };
 
-  const links = (
+  const navLinks = (
     <>
       <li>
         <NavLink
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
-              : "text-gray-600 text-lg font-semibold hover:text-purple-600"
+              ? "text-white font-bold text-lg border-b-4 border-white pb-2 transition-all"
+              : "text-white font-semibold text-lg hover:text-purple-200 transition-colors"
           }
         >
           Home
         </NavLink>
       </li>
-
-      
-
-     
-
-
-     {
-        user && <>
-       
-        <li>
-        <NavLink
-          to="/allTickets"
-          className={({ isActive }) =>
-            isActive
-              ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
-              : "text-gray-600 text-lg font-semibold hover:text-purple-600"
-          }
-        >
-          All Tickets
-        </NavLink>
-      </li>
-
-       <li>
-        <NavLink
-          to="Dashboard"
-          className={({ isActive }) =>
-            isActive
-              ? "text-purple-600 border-b-2 border-purple-600 text-lg font-semibold"
-              : "text-gray-600 text-lg font-semibold hover:text-purple-600"
-          }
-        >
-          Dashboard
-        </NavLink>
-      </li>
-        
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/allTickets"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-white font-bold text-lg border-b-4 border-white pb-2 transition-all"
+                  : "text-white font-semibold text-lg hover:text-purple-200 transition-colors"
+              }
+            >
+              All Tickets
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-white font-bold text-lg border-b-4 border-white pb-2 transition-all"
+                  : "text-white font-semibold text-lg hover:text-purple-200 transition-colors"
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
         </>
-     }
-
-
+      )}
     </>
   );
 
   return (
-    <div className="navbar bg-gray-200 shadow-sm px-2 lg:px-5">
-      {/* Logo */}
+    <div className="navbar bg-gradient-to-r from-purple-700 via-purple-600 to-pink-600 shadow-2xl fixed top-0 left-0 right-0 z-50 px-4 lg:px-16 py-4">
+      {/* Logo Section */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-4"
+              className="h-7 w-7 text-white"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -97,63 +85,59 @@ const Navbar = () => {
               />
             </svg>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
-          >
-            {links}
+          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-purple-800 rounded-box mt-4 w-56 p-4 shadow-xl z-50 border border-purple-500">
+            {navLinks}
           </ul>
         </div>
 
-        <Link to="/" className="flex items-center gap-2 font-bold">
-
-          <Logo></Logo>
+        <Link to="/" className="flex items-center gap-3">
+          <Logo />
+          
         </Link>
       </div>
 
+      
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 flex gap-4">{links}</ul>
+        <ul className="menu menu-horizontal px-1 gap-10">
+          {navLinks}
+        </ul>
       </div>
 
-      {/* User / Login buttons */}
-      <div className="navbar-end gap-3">
+      
+      <div className="navbar-end gap-4 items-center">
         {user ? (
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar ring-4 ring-white ring-opacity-40 hover:ring-opacity-80 transition-all"
             >
-              <div className="w-12 rounded-full ">
-                 {user && <img referrerPolicy="no-referrer" className='w-12 rounded-full ' src={user?.photoURL ? user?.photoURL : userimg} alt="" />}
-                
+              <div className="w-12 rounded-full overflow-hidden border-2 border-white">
+                <img
+                  alt="User Profile"
+                  src={user?.photoURL || userimg}
+                  referrerPolicy="no-referrer"
+                />
               </div>
             </div>
-
-            <ul
-              tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-200 rounded-box w-32"
-            >
-              <li className="text-center font-semibold">
-                {user?.displayName}
+            <ul tabIndex={0} className="mt-4 p-4 shadow-xl menu menu-sm dropdown-content bg-purple-800 rounded-xl w-60 border border-purple-500 text-white">
+              <li className="text-center py-3 border-b border-purple-600">
+                <span className="font-bold text-lg">
+                  {user?.displayName || "User"}
+                </span>
               </li>
-              <div className="divider my-1"></div>
-
-              
-              <li>
-                <NavLink to="/myProfile">My Profile</NavLink>
+              <li className="pt-3">
+                <NavLink
+                  to="/myProfile"
+                  className="font-medium hover:text-purple-200 hover:bg-purple-700 rounded-lg"
+                >
+                  My Profile
+                </NavLink>
               </li>
-               <Link
-              to="/login"
-              className="btn bg-primary text-black px-2 lg:px-6"
-            >
-              Login
-            </Link>
-
               <li>
                 <button
                   onClick={handleLogOut}
-                  className="text-red-600 font-semibold hover:text-red-700"
+                  className="text-red-300 font-bold hover:bg-red-900 rounded-lg py-3 transition-colors"
                 >
                   Logout
                 </button>
@@ -164,24 +148,19 @@ const Navbar = () => {
           <>
             <Link
               to="/login"
-              className="btn bg-primary text-black px-2 lg:px-6"
+              className="btn bg-white text-purple-700 font-bold px-8 py-3 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
               Login
             </Link>
-
             <Link
               to="/register"
-              className="btn bg-primary  text-black px-2 lg:px-6"
+              className="btn bg-white text-purple-700 font-bold px-8 py-3 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hidden md:inline-flex"
             >
               Register
             </Link>
           </>
         )}
       </div>
-      
-
-     
-
     </div>
   );
 };
