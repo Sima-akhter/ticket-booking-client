@@ -10,13 +10,8 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {
-        toast.success("You have logged out successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.message);
-      });
+      .then(() => toast.success("You have logged out successfully"))
+      .catch(error => toast.error(error.message));
   };
 
   const navLinks = (
@@ -26,36 +21,23 @@ const Navbar = () => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "text-white font-bold text-lg border-b-4 border-white pb-2 transition-all"
-              : "text-white font-semibold text-lg hover:text-purple-200 transition-colors"
+              ? "text-white font-bold text-lg border-b-2 border-white pb-1"
+              : "text-white font-semibold text-lg hover:text-purple-200"
           }
         >
           Home
         </NavLink>
       </li>
+
       {user && (
         <>
           <li>
-            <NavLink
-              to="/allTickets"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-white font-bold text-lg border-b-4 border-white pb-2 transition-all"
-                  : "text-white font-semibold text-lg hover:text-purple-200 transition-colors"
-              }
-            >
+            <NavLink to="/allTickets" className="text-white font-semibold text-lg hover:text-purple-200">
               All Tickets
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-white font-bold text-lg border-b-4 border-white pb-2 transition-all"
-                  : "text-white font-semibold text-lg hover:text-purple-200 transition-colors"
-              }
-            >
+            <NavLink to="/dashboard" className="text-white font-semibold text-lg hover:text-purple-200">
               Dashboard
             </NavLink>
           </li>
@@ -65,80 +47,63 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-gradient-to-r from-purple-700 via-purple-600 to-pink-600 shadow-2xl fixed top-0 left-0 right-0 z-50 px-4 lg:px-16 py-4">
-      {/* Logo Section */}
+    <div className="navbar bg-gradient-to-r from-purple-700 fixed top-0 right-0 left-0 z-50  via-purple-600 to-pink-600 shadow-xl px-4 overflow-x-hidden">
+      
+      {/* Navbar Start */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-7 w-7 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-purple-800 rounded-box mt-4 w-56 p-4 shadow-xl z-50 border border-purple-500">
+
+          {/* Mobile Menu */}
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 w-52 p-4 bg-purple-800 rounded-xl shadow-xl z-50 overflow-hidden"
+          >
             {navLinks}
           </ul>
         </div>
 
-        <Link to="/" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-2">
           <Logo />
-          
         </Link>
       </div>
 
-      
+      {/* Navbar Center */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-10">
+        <ul className="menu menu-horizontal gap-10">
           {navLinks}
         </ul>
       </div>
 
-      
-      <div className="navbar-end gap-4 items-center">
+      {/* Navbar End */}
+      <div className="navbar-end gap-4">
         {user ? (
           <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar ring-4 ring-white ring-opacity-40 hover:ring-opacity-80 transition-all"
-            >
-              <div className="w-12 rounded-full overflow-hidden border-2 border-white">
-                <img
-                  alt="User Profile"
-                  src={user?.photoURL || userimg}
-                  referrerPolicy="no-referrer"
-                />
+            <div tabIndex={0} role="button"
+              className="btn btn-ghost btn-circle avatar ring-2 ring-white">
+              <div className="w-11 rounded-full overflow-hidden">
+                <img src={user?.photoURL || userimg} alt="user" />
               </div>
             </div>
-            <ul tabIndex={0} className="mt-4 p-4 shadow-xl menu menu-sm dropdown-content bg-purple-800 rounded-xl w-60 border border-purple-500 text-white">
-              <li className="text-center py-3 border-b border-purple-600">
-                <span className="font-bold text-lg">
-                  {user?.displayName || "User"}
-                </span>
+
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 w-56 p-4 bg-purple-800 rounded-xl shadow-xl text-white overflow-hidden"
+            >
+              <li className="text-center font-bold border-b border-purple-600 pb-2">
+                {user?.displayName || "User"}
               </li>
-              <li className="pt-3">
-                <NavLink
-                  to="/myProfile"
-                  className="font-medium hover:text-purple-200 hover:bg-purple-700 rounded-lg"
-                >
-                  My Profile
-                </NavLink>
+              <li className="mt-2">
+                <NavLink to="/myProfile">My Profile</NavLink>
               </li>
               <li>
-                <button
-                  onClick={handleLogOut}
-                  className="text-red-300 font-bold hover:bg-red-900 rounded-lg py-3 transition-colors"
-                >
+                <button onClick={handleLogOut} className="text-red-300 font-bold">
                   Logout
                 </button>
               </li>
@@ -146,16 +111,10 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <Link
-              to="/login"
-              className="btn bg-white text-purple-700 font-bold px-8 py-3 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-            >
+            <Link to="/login" className="btn bg-white text-purple-700 font-bold rounded-full px-6">
               Login
             </Link>
-            <Link
-              to="/register"
-              className="btn bg-white text-purple-700 font-bold px-8 py-3 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hidden md:inline-flex"
-            >
+            <Link to="/register" className="btn bg-white text-purple-700 font-bold rounded-full px-6 hidden md:inline-flex">
               Register
             </Link>
           </>

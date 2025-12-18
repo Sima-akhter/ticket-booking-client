@@ -20,6 +20,7 @@ const DashboardLayout = () => {
                         <div className="px-4">TicketBari Dashboard</div>
                     </nav>
                     {/* Page content here */}
+                    
                     <Outlet></Outlet>
 
                 </div>

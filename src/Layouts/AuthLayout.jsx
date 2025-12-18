@@ -1,13 +1,19 @@
 import React from 'react'
-import Logo from '../components/Logo/Logo'
+
 import { Outlet } from 'react-router'
+import Navbar from '../Pages/Shard/Navbar/Navbar'
+import Footer from '../Pages/Shard/Fotter/Footer'
 
 const AuthLayout = () => {
   return (
     <div className='max-w-7xl mx-auto'>
-        <Logo></Logo>
+        
         <div>
-            <Outlet></Outlet>
+            <Navbar></Navbar>
+            <div className='mt-20'>
+                <Outlet></Outlet>
+            </div>
+            <Footer></Footer>
         </div>
     </div>
   )
