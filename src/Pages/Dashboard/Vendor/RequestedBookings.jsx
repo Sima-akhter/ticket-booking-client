@@ -7,13 +7,13 @@ const RequestedBookings = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/vendor/bookings/${user.email}`)
+    fetch(`http://localhost:5000/vendor/bookings/${user.email}`)
       .then(res => res.json())
       .then(data => setBookings(data));
   }, [user.email]);
 
   const handleAccept = (id) => {
-    fetch(`http://localhost:3000/bookings/accept/${id}`, {
+    fetch(`http://localhost:5000/bookings/accept/${id}`, {
       method: "PATCH",
     })
       .then(res => res.json())
@@ -24,7 +24,7 @@ const RequestedBookings = () => {
   };
 
   const handleReject = (id) => {
-    fetch(`http://localhost:3000/bookings/reject/${id}`, {
+    fetch(`http://localhost:5000/bookings/reject/${id}`, {
       method: "PATCH",
     })
       .then(res => res.json())

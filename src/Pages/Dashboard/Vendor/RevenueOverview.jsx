@@ -7,7 +7,7 @@ const RevenueOverview = () => {
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/vendor/revenue/${user.email}`)
+    fetch(`http://localhost:5000/vendor/revenue/${user.email}`)
       .then((res) => res.json())
       .then((data) => setStats(data));
   }, [user.email]);

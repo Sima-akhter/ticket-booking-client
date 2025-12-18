@@ -1,14 +1,9 @@
 
-
-// import { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "../../../components/Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
 import userimg from '../../../assets/user.png'
-// import { toast } from "react-toastify";
-// import userimg from "../assets/user.png";
-// import foodlogo from "../assets/img.png";
-// import { AuthContext } from "../AuthContexts/AuthProvider";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const {user, logOut} = useAuth();
@@ -17,11 +12,11 @@ const Navbar = () => {
     logOut()
       .then(() => {
 
-        // toast.success("You have logged out successfully");
+        toast.success("You have logged out successfully");
       })
       .catch((error) => {
         console.log(error)
-        //  toast.error(error.message);
+         toast.error(error.message);
       });
   };
 

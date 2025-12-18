@@ -1,134 +1,248 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
-import SocialLogin from '../SocialLogin/SocialLogin';
-import axios from 'axios';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-
-
+import axios from 'axios';
+import SocialLogin from '../SocialLogin/SocialLogin';
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  Image,
+  AlertCircle,
+  CheckCircle,
+} from 'lucide-react';
 
 const Register = () => {
-    
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const { registerUser, updateUserProfile } = useAuth();
-    const location = useLocation();
-    const navigate = useNavigate();
-    const axiosSecure = useAxiosSecure();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    console.log('in register', location)
+  const { registerUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation();
+  const navigate = useNavigate();
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [registerError, setRegisterError] = useState('');
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
+  const from = location.state?.from?.pathname || '/';
 
-    const handleRegistration = (data) => {
+  const handleRegistration = async (data) => {
+    setIsLoading(true);
+    setRegisterError('');
+    setRegisterSuccess(false);
 
-        console.log('after register', data.image[0]);
-        const profileImg = data.image[0];
+    try {
+      
+      const result = await registerUser(data.email, data.password);
 
+      
+      const formData = new FormData();
+      formData.append('image', data.image[0]);
 
-        registerUser(data.email, data.password)
-            .then(result => {
-                console.log(result.user);
+      const imageAPI = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
 
-                // store the image in form data
-                const formData = new FormData();
-                formData.append('image', profileImg);
+      const imgRes = await axios.post(imageAPI, formData);
+      const photoURL = imgRes.data.data.url;
 
-                // send the pohoto to store and get the url
-                const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`
+      
+      await updateUserProfile({
+        displayName: data.name,
+        photoURL,
+      });
 
+      
+      await axiosSecure.post('/users', {
+        name: data.name,
+        email: data.email,
+        photoURL,
+      });
 
+      setRegisterSuccess(true);
 
-
-
-                axios.post(image_API_URL, formData)
-                    .then(res => {
-                        const photoURL = res.data.data.url;
-
-                        // create user in the database
-                        const userInfo = {
-                            email: data.email,
-                            displayName: data.name,
-                            photoURL: photoURL,
-                        };
-
-                        axiosSecure.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    console.log('user created in the database');
-                                }
-                            });
-
-                        // update user profile to firebase
-                        const userProfile = {
-                            displayName: data.name,
-                            photoURL: photoURL
-                        };
-
-                        updateUserProfile(userProfile)
-                            .then(() => {
-                                console.log('user profile updated done');
-                                navigate(location.state || '/');
-                            })
-                            .catch(error => console.log(error));
-                    });
-
-
-
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
-
+      setTimeout(() => {
+        navigate(from, { replace: true });
+      }, 1200);
+    } catch (error) {
+      console.error(error);
+      setRegisterError('Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-    return (
-        <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
-            <h2 className='text-3xl text-center'>Welcome to Ticket Booking</h2>
-            <p className='text-center'>please register</p>
-            <form onSubmit={handleSubmit(handleRegistration)} className="card-body">
-                <fieldset className="fieldset">
-                    {/* name */}
-                    <label className="label">Name</label>
-                    <input type="text" {...register('name', { required: true })} className="input" placeholder="Your Name" />
-                    {errors.name?.type === 'required' && <p className='text-red-500'>Name is required.</p>}
-                    {/* image */}
-                    <label className="label">image</label>
+  };
 
-                    <input type="file" {...register('image', { required: true })} className="file-input" placeholder="Your image" />
-                    {errors.name?.type === 'required' && <p className='text-red-500'>image is required.</p>}
-                    {/* emai */}
-                    <label className="label">Email</label>
-                    <input type="email" {...register('email', { required: true })} className="input" placeholder="Email" />
-                    {errors.email?.type === 'required' && <p className='text-red-500'>Email is required.</p>}
-
-                    {/* password */}
-
-                    <label className="label">Password</label>
-                    <input type="password" {...register('password', {
-                        required: true,
-                        minLength: 6,
-                        pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/
-                    })} className="input" placeholder="Password" />
-                    {
-                        errors.password?.type === 'required' && <p className='text-red-500'>Password is required.</p>
-                    }
-                    {
-                        errors.password?.type === 'minLength' && <p className='text-red-500'>Password must be 6 characters or longer</p>
-                    }
-                    {
-                        errors.password?.type === 'pattern' && <p className='text-red-500'>Password must have at least one uppercase, at least one lowercase, at least one number, and at least one special characters</p>
-                    }
-                    <div><a className="link link-hover">Forgot password?</a></div>
-                    <button className="btn btn-neutral mt-4">Register</button>
-                </fieldset>
-                <p>Already have an account <Link
-                    state={location.state}
-                    className='text-blue-500 underline' to="/login">Login</Link></p>
-            </form>
-            <SocialLogin></SocialLogin>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 px-4 py-8">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+         
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Create Account
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Join us and start your journey
+          </p>
         </div>
-    )
-}
 
-export default Register
+        {/* Card */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+          <div className="p-8">
+            {/* Error */}
+            {registerError && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600" />
+                <p className="text-red-700 text-sm">{registerError}</p>
+              </div>
+            )}
+
+            {/* Success */}
+            {registerSuccess && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex gap-3">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <p className="text-green-700 text-sm">
+                  Account created successfully! Redirecting...
+                </p>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit(handleRegistration)} className="space-y-5">
+              {/* Name */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Full Name</label>
+                <div className="relative">
+                  <User className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    className="w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                    {...register('name', { required: 'Name is required' })}
+                  />
+                </div>
+                {errors.name && (
+                  <p className="text-red-600 text-sm mt-1 flex gap-1">
+                    <AlertCircle className="w-4 h-4" /> {errors.name.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Image */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Profile Image</label>
+                <div className="relative">
+                  <Image className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
+                  <input
+                    type="file"
+                    className="w-full pl-12 pr-4 py-3 border rounded-xl"
+                    {...register('image', { required: 'Image is required' })}
+                  />
+                </div>
+                {errors.image && (
+                  <p className="text-red-600 text-sm mt-1 flex gap-1">
+                    <AlertCircle className="w-4 h-4" /> {errors.image.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
+                  <input
+                    type="email"
+                    placeholder="you@example.com"
+                    className="w-full pl-12 pr-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                    {...register('email', { required: 'Email is required' })}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-red-600 text-sm mt-1 flex gap-1">
+                    <AlertCircle className="w-4 h-4" /> {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Password</label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-3.5 text-gray-400 w-5 h-5" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Strong password"
+                    className="w-full pl-12 pr-12 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                    {...register('password', {
+                      required: 'Password is required',
+                      minLength: {
+                        value: 6,
+                        message: 'Minimum 6 characters',
+                      },
+                      pattern: {
+                        value:
+                          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
+                        message:
+                          'Must include uppercase, lowercase, number & symbol',
+                      },
+                    })}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-3.5 text-gray-400"
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-600 text-sm mt-1 flex gap-1">
+                    <AlertCircle className="w-4 h-4" /> {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Button */}
+              <button
+                disabled={isLoading || registerSuccess}
+                className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl shadow-lg hover:shadow-xl transition disabled:opacity-50"
+              >
+                {isLoading ? 'Creating Account...' : 'Create Account'}
+              </button>
+            </form>
+
+            {/* Divider */}
+            <div className="my-6 text-center text-sm text-gray-500">
+              Or continue with
+            </div>
+
+            <SocialLogin />
+          </div>
+
+          {/* Footer */}
+          <div className="bg-gray-50 px-8 py-4 border-t">
+            <p className="text-center text-sm">
+              Already have an account?{' '}
+              <Link
+                to="/login"
+                state={location.state}
+                className="text-blue-600 font-semibold"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
