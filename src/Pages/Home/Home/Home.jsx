@@ -3,6 +3,7 @@ import Banner from '../Banner/Banner'
 import Advertisment from '../../Advertisement/Advertisment'
 import TicketCard from '../../Advertisement/TicketCard'
 import PopularRoutes from '../PopularRoutes/PopularRoutes'
+import WhyChooseUs from './WhyChooseUs/WhyChooseUs'
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
             <Advertisment></Advertisment>
             <TicketCard></TicketCard>
             <PopularRoutes></PopularRoutes>
+            <WhyChooseUs></WhyChooseUs>
 
         </div>
     </div>

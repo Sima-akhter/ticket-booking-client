@@ -1,10 +1,10 @@
 import React from 'react'
 import { FaChartBar, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaTicketAlt, FaUser, FaUserTie } from 'react-icons/fa'
 import { Link, NavLink, Outlet } from 'react-router'
-import useRole from '../hooks/useRole';
+// import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
-    const { role } = useRole();
+    // const { role } = useRole();
     return (
         <div>
 
@@ -61,8 +61,8 @@ const DashboardLayout = () => {
 
                             {/* vendor dashboard link */}
 
-                            {
-                                role == 'vendor' && <>
+                            
+                                // role == 'vendor' && <>
 
                                     <li>
                                         <NavLink to="/dashboard/vendorProfile" className="flex items-center gap-2">
@@ -100,8 +100,8 @@ const DashboardLayout = () => {
                                     </li>
 
 
-                                </>
-                            }
+                                // </>
+                            
 
 
 

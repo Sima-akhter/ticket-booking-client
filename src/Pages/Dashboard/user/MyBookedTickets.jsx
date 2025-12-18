@@ -10,7 +10,7 @@ const MyBookedTickets = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchBookings = () => {
-    fetch(`http://localhost:5000/bookings/user/${user.email}`)
+    fetch(`http://localhost:3000/bookings/user/${user.email}`)
       .then(res => res.json())
       .then(data => {
         setBookings(data);

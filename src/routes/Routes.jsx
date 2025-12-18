@@ -84,28 +84,28 @@ export const router = createBrowserRouter([
           // only vendor route
          {
                 path: 'vendorProfile',
-                element: <VendorRoute><VendorProfile></VendorProfile></VendorRoute>
+                element: <VendorProfile></VendorProfile>
             },
 
             {
                 path: 'addTickets',
-                element: <VendorRoute><AddTicket></AddTicket></VendorRoute>
+                element: <AddTicket></AddTicket>
             },
             {
                 path: 'myAddTickets',
-                element: <VendorRoute><MyAddedTickets></MyAddedTickets></VendorRoute>
+                element: <MyAddedTickets></MyAddedTickets>
 
 
             },
             {
                 path: 'requestedBookings',
-                element: <VendorRoute><RequestedBookings></RequestedBookings></VendorRoute>
+                element: <RequestedBookings></RequestedBookings>
 
 
             },
             {
                 path: 'revenueOverview',
-                element: <VendorRoute><RevenueOverview></RevenueOverview></VendorRoute>
+                element: <RevenueOverview></RevenueOverview>
 
 
             },
