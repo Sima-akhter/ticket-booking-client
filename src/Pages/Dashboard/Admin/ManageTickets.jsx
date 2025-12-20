@@ -3,13 +3,14 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageTickets = () => {
-    const axiosSecure = useAxiosSecure;
+    const axiosSecure = useAxiosSecure();
 
 
     const { data: tickets = [], refetch } = useQuery({
         queryKey: ['pending-tickets'],
         queryFn: async () => {
             const res = await axiosSecure.get('/admin/tickets');
+            console.log(res.data)
             return res.data;
         }
     });

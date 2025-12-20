@@ -107,11 +107,11 @@ const MyBookedTickets = () => {
                     {b.from} → {b.to}
                   </p>
 
-                  <p>🕒 {new Date(b.departureDateTime).toLocaleString()}</p>
+                  <p> {new Date(b.departureDateTime).toLocaleString()}</p>
 
-                  <p>🎫 Quantity: {b.quantity}</p>
+                  <p> Quantity: {b.quantity}</p>
 
-                  <p className="font-semibold">💰 Total: {b.totalPrice} ৳</p>
+                  <p className="font-semibold"> Total: {b.totalPrice} TK</p>
 
                   {/* STATUS */}
                   <div className="mt-2">
@@ -130,18 +130,17 @@ const MyBookedTickets = () => {
                     </span>
                   </div>
 
-                  {/* COUNTDOWN */}
+                 
                   {b.status !== "rejected" && remaining !== "Expired" && (
-                    <p className="text-sm text-gray-600 mt-2">⏳ {remaining}</p>
+                    <p className="text-sm text-gray-600 mt-2"> {remaining}</p>
                   )}
 
                   {remaining === "Expired" && (
                     <p className="text-red-500 text-sm mt-2">
-                      ❌ Departure time passed
+                       Departure time passed
                     </p>
                   )}
 
-                  {/* PAY NOW */}
                   {b.status === "accepted" && remaining !== "Expired" && (
                     <button
                       onClick={() => handlePay(b._id)}

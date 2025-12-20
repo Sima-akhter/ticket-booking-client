@@ -115,28 +115,28 @@ export const router = createBrowserRouter([
           // only vendor route
          {
                 path: 'vendorProfile',
-                element: <VendorProfile></VendorProfile>
+                element: <VendorRoute><VendorProfile></VendorProfile></VendorRoute>
             },
 
             {
                 path: 'addTickets',
-                element: <AddTicket></AddTicket>
+                element: <VendorRoute> <AddTicket></AddTicket></VendorRoute>
             },
             {
                 path: 'myAddTickets',
-                element: <MyAddedTickets></MyAddedTickets>
+                element: <VendorRoute><MyAddedTickets></MyAddedTickets></VendorRoute>
 
 
             },
             {
                 path: 'requestedBookings',
-                element: <RequestedBookings></RequestedBookings>
+                element: <VendorRoute><RequestedBookings></RequestedBookings></VendorRoute>
 
 
             },
             {
                 path: 'revenueOverview',
-                element: <RevenueOverview></RevenueOverview>
+                element: <VendorRoute><RevenueOverview></RevenueOverview></VendorRoute>
 
 
             },
