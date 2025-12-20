@@ -4,8 +4,17 @@ import { Link, NavLink, Outlet } from 'react-router'
 import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
-    const  role  = useRole();
-    console.log(role[0]?.role)
+    // const  role  = useRole();
+    // console.log(role[0]?.role);
+
+    const [roleData, isLoading] = useRole();
+
+if (isLoading) {
+  return <p className="text-center mt-20">Loading dashboard...</p>;
+}
+
+const role = roleData?.role;
+
 
     return (
         <div>
@@ -65,7 +74,7 @@ const DashboardLayout = () => {
                             {/* vendor dashboard link */}
 
                            {
-                                 role[0]?.role == 'vendor' && <>
+                                 role == 'vendor' && <>
 
                                     <li>
                                         <NavLink to="/dashboard/vendorProfile" className="flex items-center gap-2">
@@ -107,7 +116,7 @@ const DashboardLayout = () => {
 
                             {/* admin dashboard link */}
                          { 
-                           role[0]?.role == 'admin' && <>
+                           role == 'admin' && <>
                             
                               <li>
                                 <NavLink

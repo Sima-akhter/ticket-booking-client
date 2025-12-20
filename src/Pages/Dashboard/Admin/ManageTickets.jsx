@@ -42,9 +42,9 @@ const ManageTickets = () => {
                     <tr key={ticket._id}>
                         <td>{ticket.title}</td>
                         <td>{ticket.vendorEmail}</td>
-                        <td>
-                            <button onClick={() => handleApprove(ticket._id)}>Approve</button>
-                            <button onClick={() => handleReject(ticket._id)}>Reject</button>
+                        <td className="flex gap-4">
+                            <button onClick={() => handleApprove(ticket._id)} className="btn bg-green-200">Approve</button>
+                            <button onClick={() => handleReject(ticket._id)} className="btn bg-red-200">Reject</button>
                         </td>
                     </tr>
                 ))}

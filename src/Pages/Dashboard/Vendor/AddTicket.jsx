@@ -3,32 +3,75 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaTicketAlt, FaMapMarkerAlt, FaBus, FaDollarSign, FaCalendarAlt, FaImage, FaUser, FaEnvelope, FaCheck } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const AddTicket = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const handleAddTicket = async (data) => {
+//   const handleAddTicket = async (data) => {
    
-    const selectedPerks = Object.keys(data.perks || {}).filter(key => data.perks[key]);
-    const ticketData = {
-      ...data,
-      perks: selectedPerks,
-      price: parseFloat(data.price),
-      ticketQuantity: parseInt(data.ticketQuantity),
-      vendorName: user?.displayName || data.vendorName,
-      vendorEmail: user?.email || data.vendorEmail,
-    };
+//     const selectedPerks = Object.keys(data.perks || {}).filter(key => data.perks[key]);
+//     const ticketData = {
+//       ...data,
+//       perks: selectedPerks,
+//       price: parseFloat(data.price),
+//       ticketQuantity: parseInt(data.ticketQuantity),
+//       vendorName: user?.displayName || data.vendorName,
+//       vendorEmail: user?.email || data.vendorEmail,
+//     };
 
-    try {
-      const res = await axiosSecure.post("/tickets", ticketData);
-      console.log("Ticket Added:", res.data);
+//     try {
+//       const res = await axiosSecure.post("/tickets", ticketData);
+//       console.log("Ticket Added:", res.data);
 
-    } catch (error) {
-      console.error("Error adding ticket:", error);
-    }
+//     } catch (error) {
+//       console.error("Error adding ticket:", error);
+//     }
+//   };
+
+
+const handleAddTicket = async (data) => {
+  const selectedPerks = Object.keys(data.perks || {}).filter(
+    key => data.perks[key]
+  );
+
+  const ticketData = {
+    ...data,
+    perks: selectedPerks,
+    price: parseFloat(data.price),
+    ticketQuantity: parseInt(data.ticketQuantity),
+    vendorName: user?.displayName,
+    vendorEmail: user?.email,
+    status: "pending", // admin approve না করা পর্যন্ত
   };
+
+  try {
+    const res = await axiosSecure.post("/tickets", ticketData);
+
+    if (res.data?.insertedId) {
+      Swal.fire({
+        icon: "success",
+        title: "Ticket Added!",
+        text: "Your ticket has been submitted for admin approval.",
+        confirmButtonColor: "#7c3aed",
+      });
+    }
+  } catch (error) {
+    console.error("Error adding ticket:", error);
+
+    Swal.fire({
+      icon: "error",
+      title: "Oops!",
+      text: "Failed to add ticket. Please try again.",
+      confirmButtonColor: "#dc2626",
+    });
+  }
+};
+
+
+
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">

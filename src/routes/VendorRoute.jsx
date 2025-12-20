@@ -1,18 +1,19 @@
-import React from 'react'
-import useAuth from '../hooks/useAuth';
-import useRole from '../hooks/useRole';
-import Loading from '../components/Loading';
-import Forbidden from '../components/Forbidden';
+import Forbidden from "../components/Forbidden";
+import Loading from "../components/Loading";
+import useAuth from "../hooks/useAuth";
+import useRole from "../hooks/useRole";
+
 
 const VendorRoute = ({children}) => {
-  const { loading, user} = useAuth();
-    const {role, roleLoading} = useRole();
+    const { loading} = useAuth();
+    const role = useRole();
+    console.log(role)
 
-    if(loading || !user || roleLoading){
+    if(loading ){
     return <Loading></Loading>
    }
 
-  if(role !== 'vendor'){
+  if(role[0]?.role !== 'vendor'){
     return <Forbidden></Forbidden>
   }
   return children;
