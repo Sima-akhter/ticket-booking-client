@@ -1,10 +1,10 @@
 import React from 'react'
-import { FaChartBar, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaTicketAlt, FaUser, FaUserTie } from 'react-icons/fa'
+import { FaBullhorn, FaChartBar, FaClipboardList, FaMoneyCheckAlt, FaPlusCircle, FaTicketAlt, FaUser, FaUsersCog, FaUserShield, FaUserTie } from 'react-icons/fa'
 import { Link, NavLink, Outlet } from 'react-router'
-// import useRole from '../hooks/useRole';
+import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
-    // const { role } = useRole();
+    const { role } = useRole();
     return (
         <div>
 
@@ -20,7 +20,7 @@ const DashboardLayout = () => {
                         <div className="px-4">TicketBari Dashboard</div>
                     </nav>
                     {/* Page content here */}
-                    
+
                     <Outlet></Outlet>
 
                 </div>
@@ -62,7 +62,7 @@ const DashboardLayout = () => {
 
                             {/* vendor dashboard link */}
 
-                            
+                           
                                 // role == 'vendor' && <>
 
                                     <li>
@@ -102,11 +102,52 @@ const DashboardLayout = () => {
 
 
                                 // </>
+
+                            {/* admin dashboard link */}
+                          
+                            {/* role == 'admin' && <> */}
                             
+                              <li>
+                                <NavLink
+                                    to="/dashboard/adminProfile"
+                                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100"
+                                >
+                                    <FaUserShield />
+                                    <span>Admin Profile</span>
+                                </NavLink>
+                            </li>
 
+                            <li>
+                                <NavLink
+                                    to="/dashboard/advertiseTickets"
+                                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100"
+                                >
+                                    <FaBullhorn />
+                                    <span>Advertise Tickets</span>
+                                </NavLink>
+                            </li>
 
+                            <li>
+                                <NavLink
+                                    to="/dashboard/manageTickets"
+                                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100"
+                                >
+                                    <FaTicketAlt />
+                                    <span>Manage Tickets</span>
+                                </NavLink>
+                            </li>
 
-
+                            <li>
+                                <NavLink
+                                    to="/dashboard/manageUsers"
+                                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100"
+                                >
+                                    <FaUsersCog />
+                                    <span>Manage Users</span>
+                                </NavLink>
+                            </li>
+                            {/* </> */}
+                          
 
                             {/* List item */}
                             <li>

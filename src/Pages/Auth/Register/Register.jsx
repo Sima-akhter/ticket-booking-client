@@ -43,6 +43,7 @@ const Register = () => {
     try {
       
       const result = await registerUser(data.email, data.password);
+      console.log(result)
 
       
       const formData = new FormData();

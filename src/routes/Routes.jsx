@@ -17,6 +17,15 @@ import UserProfile from "../Pages/Dashboard/user/UserProfile";
 import MyBookedTickets from "../Pages/Dashboard/user/MyBookedTickets";
 import TransactionHistory from "../Pages/Dashboard/user/TransactionHistory";
 import AllTickets from "../Pages/AllTickets";
+import MyProfile from "../Pages/MyProfile/MyProfile";
+import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
+import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
+import ManageTickets from "../Pages/Dashboard/Admin/ManageTickets";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import Booking from "../Pages/Dashboard/Booking/Booking";
+import BookingSuccess from "../Pages/Dashboard/Booking/BookingSuccess";
+import BookingCancelled from "../Pages/Dashboard/Booking/BookingCancelled";
 
 export const router = createBrowserRouter([
     {
@@ -32,7 +41,13 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <TicketDetails></TicketDetails>
                 </PrivateRoute>
+            },
+
+            {
+                path:'myProfile',
+                element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
             }
+
         ]
     },
 
@@ -76,10 +91,26 @@ export const router = createBrowserRouter([
                 path: "myBookedTickets",
                 element: <MyBookedTickets />
             },
+
             {
                 path: "transactions",
                 element: <TransactionHistory />
             },
+            {
+                path:'booking/:ticketsId',
+                element: <Booking></Booking>
+
+            },
+            {
+                path: 'bookingSuccess',
+                element: <BookingSuccess></BookingSuccess>
+            },
+            {
+                path: 'bookingCancelled',
+                element: <BookingCancelled></BookingCancelled>
+            },
+
+
 
           // only vendor route
          {
@@ -109,6 +140,25 @@ export const router = createBrowserRouter([
 
 
             },
+
+            //only admin route
+            {
+                path: 'adnimProfile',
+                element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
+            },
+
+            {
+                path: 'advertiseTickets',
+                element: <AdminRoute><AdvertiseTickets></AdvertiseTickets></AdminRoute>
+            },
+            {
+                path: 'manageTickets',
+                element: <AdminRoute><ManageTickets></ManageTickets></AdminRoute>
+            },
+            {
+                path: 'manageUsers',
+                element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+            }
 
 
         ]

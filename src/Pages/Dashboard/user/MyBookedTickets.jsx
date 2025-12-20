@@ -1,6 +1,5 @@
-
-
 import { useEffect, useState } from "react";
+import { getAuth } from "firebase/auth"; // Firebase auth import
 import useAuth from "../../../hooks/useAuth";
 import { getRemainingTime } from "../../../utils/time";
 
@@ -9,28 +8,67 @@ const MyBookedTickets = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchBookings = () => {
-    fetch(`http://localhost:3000/bookings/user/${user.email}`)
-      .then(res => res.json())
-      .then(data => {
-        setBookings(data);
-        setLoading(false);
-      });
+  const fetchBookings = async () => {
+    try {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+
+      if (!currentUser) throw new Error("User not logged in");
+
+      // Firebase ID Token
+      const token = await currentUser.getIdToken();
+
+      const res = await fetch(
+        `http://localhost:5000/bookings/user/${user.email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch bookings");
+
+      const data = await res.json();
+      setBookings(Array.isArray(data) ? data : []);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setBookings([]);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     if (user?.email) fetchBookings();
   }, [user]);
 
-  const handlePay = (bookingId) => {
-    fetch(`http://localhost:3000/pay/${bookingId}`, {
-      method: "POST",
-    })
-      .then(res => res.json())
-      .then(() => {
-        alert("Payment Successful 🎉");
-        fetchBookings();
+  const handlePay = async (bookingId) => {
+    try {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+
+      if (!currentUser) throw new Error("User not logged in");
+      const token = await currentUser.getIdToken();
+
+      const res = await fetch(`http://localhost:5000/pay/${bookingId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      const data = await res.json();
+      if (data.success) {
+        alert("Payment Successful!");
+        fetchBookings();
+      } else {
+        alert("Payment failed!");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Payment error!");
+    }
   };
 
   if (loading) {
@@ -40,7 +78,7 @@ const MyBookedTickets = () => {
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold mb-6 text-center">
-        🎟️ My Booked Tickets
+        My Booked Tickets
       </h2>
 
       {bookings.length === 0 ? (
@@ -53,10 +91,7 @@ const MyBookedTickets = () => {
             const remaining = getRemainingTime(b.departureDateTime);
 
             return (
-              <div
-                key={b._id}
-                className="card bg-base-100 shadow-xl border"
-              >
+              <div key={b._id} className="card bg-base-100 shadow-xl border">
                 <figure>
                   <img
                     src={b.imageUrl}
@@ -69,16 +104,14 @@ const MyBookedTickets = () => {
                   <h2 className="card-title">{b.ticketTitle}</h2>
 
                   <p>
-                    📍 {b.from} → {b.to}
+                    {b.from} → {b.to}
                   </p>
 
                   <p>🕒 {new Date(b.departureDateTime).toLocaleString()}</p>
 
                   <p>🎫 Quantity: {b.quantity}</p>
 
-                  <p className="font-semibold">
-                    💰 Total: {b.totalPrice} ৳
-                  </p>
+                  <p className="font-semibold">💰 Total: {b.totalPrice} ৳</p>
 
                   {/* STATUS */}
                   <div className="mt-2">
@@ -99,9 +132,7 @@ const MyBookedTickets = () => {
 
                   {/* COUNTDOWN */}
                   {b.status !== "rejected" && remaining !== "Expired" && (
-                    <p className="text-sm text-gray-600 mt-2">
-                      ⏳ {remaining}
-                    </p>
+                    <p className="text-sm text-gray-600 mt-2">⏳ {remaining}</p>
                   )}
 
                   {remaining === "Expired" && (
@@ -122,7 +153,7 @@ const MyBookedTickets = () => {
 
                   {b.status === "paid" && (
                     <p className="text-green-600 font-medium mt-2">
-                       Payment Completed
+                      Payment Completed
                     </p>
                   )}
                 </div>
