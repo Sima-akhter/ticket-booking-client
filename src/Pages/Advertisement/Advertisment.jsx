@@ -5,7 +5,7 @@ const Advertisement = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/tickets/isAdvertised")
+    fetch("http://localhost:5000/tickets")
       .then(res => res.json())
       .then(data => setTickets(data));
   }, []);

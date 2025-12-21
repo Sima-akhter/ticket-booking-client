@@ -22,7 +22,7 @@ const TicketCard = ({ ticket }) => {
 
       <div className="card-body">
         <h2 className="card-title">{ticketTitle}</h2>
-        <p>💰 Price: {price} ৳</p>
+        <p>💰 Price: {price} TK</p>
         <p>🎫 Quantity: {ticketQuantity}</p>
         <p>🚍 Transport: {transportType}</p>
 
@@ -34,7 +34,7 @@ const TicketCard = ({ ticket }) => {
 
         <div className="card-actions justify-end">
           <Link to={`/ticketDetail/${_id}`}>
-            <button className="btn btn-primary">See Details</button>
+            <button className="btn bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 rounded-full shadow-xl hover:shadow-purple-500 transform hover:scale-105 transition-all duration-300">See Details</button>
           </Link>
         </div>
       </div>

@@ -27,6 +27,8 @@ import Booking from "../Pages/Dashboard/Booking/Booking";
 import BookingSuccess from "../Pages/Dashboard/Booking/BookingSuccess";
 import BookingCancelled from "../Pages/Dashboard/Booking/BookingCancelled";
 import ContactUs from "../Pages/ContactUs/ContactUs";
+import About from "../Pages/About/AboutUs";
+import AboutUs from "../Pages/About/AboutUs";
 
 export const router = createBrowserRouter([
     {
@@ -51,6 +53,11 @@ export const router = createBrowserRouter([
             {
                 path: 'contactUs',
                 element: <ContactUs></ContactUs>
+            },
+
+            {
+                path: 'aboutUs',
+                element: <AboutUs></AboutUs>
             }
 
         ]
