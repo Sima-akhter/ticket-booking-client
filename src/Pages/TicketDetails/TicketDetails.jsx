@@ -84,7 +84,7 @@ const TicketDetails = () => {
       alert("Quantity must be at least 1");
       return;
     }
-
+console.log(quantity, ticket)
     if (quantity > ticket.ticketQuantity) {
       alert("Not enough seats available");
       return;
@@ -98,6 +98,7 @@ const TicketDetails = () => {
       unitPrice: ticket.price,
       bookingQuantity: Number(quantity),
       totalPrice: ticket.price * quantity,
+      vendorEmail:ticket.vendorEmail,
       status: "pending",
     };
 

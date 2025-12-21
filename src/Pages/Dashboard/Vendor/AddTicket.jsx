@@ -44,7 +44,7 @@ const handleAddTicket = async (data) => {
     ticketQuantity: parseInt(data.ticketQuantity),
     vendorName: user?.displayName,
     vendorEmail: user?.email,
-    status: "pending", // admin approve না করা পর্যন্ত
+    status: "pending", 
   };
 
   try {

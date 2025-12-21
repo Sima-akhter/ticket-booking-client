@@ -26,6 +26,7 @@ import AdminRoute from "./AdminRoute";
 import Booking from "../Pages/Dashboard/Booking/Booking";
 import BookingSuccess from "../Pages/Dashboard/Booking/BookingSuccess";
 import BookingCancelled from "../Pages/Dashboard/Booking/BookingCancelled";
+import ContactUs from "../Pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
     {
@@ -44,8 +45,12 @@ export const router = createBrowserRouter([
             },
 
             {
-                path:'myProfile',
+                path: 'myProfile',
                 element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
+            },
+            {
+                path: 'contactUs',
+                element: <ContactUs></ContactUs>
             }
 
         ]
@@ -97,7 +102,7 @@ export const router = createBrowserRouter([
                 element: <TransactionHistory />
             },
             {
-                path:'booking/:ticketsId',
+                path: 'booking/:ticketsId',
                 element: <Booking></Booking>
 
             },
@@ -112,8 +117,8 @@ export const router = createBrowserRouter([
 
 
 
-          // only vendor route
-         {
+            // only vendor route
+            {
                 path: 'vendorProfile',
                 element: <VendorRoute><VendorProfile></VendorProfile></VendorRoute>
             },
@@ -159,6 +164,8 @@ export const router = createBrowserRouter([
                 path: 'manageUsers',
                 element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
             }
+
+
 
 
         ]

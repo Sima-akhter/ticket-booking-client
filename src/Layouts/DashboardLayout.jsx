@@ -51,7 +51,9 @@ const role = roleData?.role;
                             </li>
 
                             {/* our dashboard links */}
-                            <li>
+                            {
+                                role == 'user' && <>
+                                <li>
                                 <NavLink to="/dashboard/userProfile" className="flex gap-2 items-center">
                                     <FaUser /> User Profile
                                 </NavLink>
@@ -68,6 +70,10 @@ const role = roleData?.role;
                                     <FaMoneyCheckAlt /> Transaction History
                                 </NavLink>
                             </li>
+                                
+                                
+                                </>
+                            }
 
 
 
@@ -120,7 +126,7 @@ const role = roleData?.role;
                             
                               <li>
                                 <NavLink
-                                    to="/dashboard/adminProfile"
+                                    to="/dashboard/adnimProfile"
                                     className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100"
                                 >
                                     <FaUserShield />

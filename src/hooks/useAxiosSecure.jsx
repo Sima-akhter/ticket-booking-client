@@ -1,9 +1,8 @@
 
-
-import axios from 'axios'
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import useAuth from './useAuth'
+import axios from "axios";
+import useAuth from "./useAuth";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 
 const axiosSecure = axios.create({
@@ -14,14 +13,14 @@ const useAxiosSecure = () => {
    const {user, logOut} = useAuth();
    const navigate = useNavigate();
   useEffect(()=>{
-    // intercept request
+   
    const reqInerceptor = axiosSecure.interceptors.request.use(config =>{
       config.headers.Authorization = `Bearer ${user?.accessToken}`
       return config
 
     })
 
-    // interceptor response
+    
     const resInterceptor = axiosSecure.interceptors.response.use((response)=>{
       return response;
     }, (error) =>{
@@ -50,3 +49,7 @@ const useAxiosSecure = () => {
 }
 
 export default useAxiosSecure
+
+
+
+
