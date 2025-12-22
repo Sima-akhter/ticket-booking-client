@@ -20,7 +20,8 @@ const MyBookedTickets = () => {
       const token = await currentUser.getIdToken();
 
       const res = await fetch(
-        `http://localhost:5000/bookings/user/${user.email}`,
+        `server-kappa-lemon.vercel.app
+/bookings/user/${user.email}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -57,7 +58,8 @@ const MyBookedTickets = () => {
 
     const token = await currentUser.getIdToken();
     console.log(token);
-    const url = "http://localhost:5000/payment-checkout-session"
+    const url = "server-kappa-lemon.vercel.app
+/payment-checkout-session"
     console.log(url)
    
 

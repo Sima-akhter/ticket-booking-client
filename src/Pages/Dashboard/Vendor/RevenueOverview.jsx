@@ -9,7 +9,8 @@ const RevenueOverview = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/vendor/revenue/${user?.email}`)
+    fetch(`server-kappa-lemon.vercel.app
+/vendor/revenue/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setStats(data);

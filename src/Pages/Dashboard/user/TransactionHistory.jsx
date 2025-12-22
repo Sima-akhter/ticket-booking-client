@@ -6,7 +6,8 @@ const TransactionHistory = () => {
   const [payments, setPayments] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/payments/${user.email}`)
+    fetch(`server-kappa-lemon.vercel.app
+/payments/${user.email}`)
       .then(res => res.json())
       .then(data => setPayments(data));
   }, [user.email]);

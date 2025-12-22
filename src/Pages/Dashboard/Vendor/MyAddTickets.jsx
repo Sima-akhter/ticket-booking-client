@@ -12,7 +12,8 @@ const MyAddedTickets = () => {
 
     setLoading(true);
 
-    fetch(`http://localhost:5000/ticketsAdd?vendorEmail=${user.email}`)
+    fetch(`server-kappa-lemon.vercel.app
+/ticketsAdd?vendorEmail=${user.email}`)
       .then(res => res.json())
       .then(data => {
         setTickets(data);
@@ -29,7 +30,8 @@ const MyAddedTickets = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this ticket?");
     if (!confirmDelete) return;
 
-    fetch(`http://localhost:5000/tickets/${id}`, {
+    fetch(`server-kappa-lemon.vercel.app
+/tickets/${id}`, {
       method: "DELETE",
     })
       .then(res => res.json())
