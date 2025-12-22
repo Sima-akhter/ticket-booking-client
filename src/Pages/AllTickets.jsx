@@ -7,8 +7,7 @@ const AllTickets = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("server-kappa-lemon.vercel.app
-/tickets")
+    fetch("server-kappa-lemon.vercel.app/tickets")
       .then((res) => res.json())
       .then((data) => {
         setTickets(data);

@@ -16,8 +16,7 @@ const AdminAdvertiseTickets = () => {
 
   const handleToggleAdvertise = async (ticket) => {
     try {
-      await axiosSecure.patch(
-        `/admin/tickets/advertise/${ticket._id}`,
+      await axiosSecure.patch(`/admin/tickets/advertise/${ticket._id}`,
         {
           isAdvertised: ticket.isAdvertised,
         }

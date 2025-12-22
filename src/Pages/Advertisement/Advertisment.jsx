@@ -5,8 +5,7 @@ const Advertisement = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch("server-kappa-lemon.vercel.app
-/tickets")
+    fetch("server-kappa-lemon.vercel.app/tickets")
       .then(res => res.json())
       .then(data => setTickets(data));
   }, []);

@@ -52,8 +52,7 @@ const Booking = () => {
         totalPrice: bookingQuantity * ticket.price,
       };
 
-      const res = await fetch("server-kappa-lemon.vercel.app
-/bookings", {
+      const res = await fetch("server-kappa-lemon.vercel.app/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
