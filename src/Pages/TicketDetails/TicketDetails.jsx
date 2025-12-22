@@ -52,29 +52,6 @@ console.log(ticket)
     }
   };
 
-//   const getCountdown = () => {
-//     if (!ticket?.departureDateTime
-// ) return "N/A";
-
-//     const now = new Date();
-//     const diff =new Date(ticket.departureDateTime) -now;
-
-//     if (diff <= 0)
-//       return <span className="text-red-600 font-bold">Departed</span>;
-
-//     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-//     const hours = Math.floor(
-//       (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-//     );
-//     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-//     return (
-//       <span className="text-green-600 font-bold">
-//         {days}d {hours}h {minutes}m left
-//       </span>
-//     );
-//   };
-
 const getCountdown = () => {
   if (!ticket?.departureDateTime) return "N/A";
 

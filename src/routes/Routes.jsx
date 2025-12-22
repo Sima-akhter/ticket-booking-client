@@ -30,6 +30,7 @@ import ContactUs from "../Pages/ContactUs/ContactUs";
 import About from "../Pages/About/AboutUs";
 import AboutUs from "../Pages/About/AboutUs";
 import AdminAdvertiseTickets from "../Pages/Dashboard/Admin/AdminAdvertiseTickets";
+import Error from "../Pages/Error";
 
 export const router = createBrowserRouter([
     {
@@ -177,7 +178,11 @@ export const router = createBrowserRouter([
 
 
         ]
+    },
+
+
+    {
+      path: '*',
+      element: <Error></Error>
     }
-
-
 ]);
