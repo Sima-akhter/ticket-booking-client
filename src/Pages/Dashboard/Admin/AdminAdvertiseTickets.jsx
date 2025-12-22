@@ -1,5 +1,4 @@
 
-
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
@@ -20,7 +19,7 @@ const AdminAdvertiseTickets = () => {
       await axiosSecure.patch(
         `/admin/tickets/advertise/${ticket._id}`,
         {
-          isAdvertised: !ticket.isAdvertised,
+          isAdvertised: ticket.isAdvertised,
         }
       );
       refetch();

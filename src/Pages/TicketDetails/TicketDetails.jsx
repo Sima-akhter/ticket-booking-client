@@ -52,32 +52,57 @@ console.log(ticket)
     }
   };
 
-  
-  const getCountdown = () => {
-    if (!ticket?.departureDateTime
-) return "N/A";
+//   const getCountdown = () => {
+//     if (!ticket?.departureDateTime
+// ) return "N/A";
 
-    // const departure = new Date(
-    //   `${ticket.departureDate}T${ticket.departureTime}:00`
-    // );
-    const now = new Date();
-    const diff =new Date(ticket.departureDateTime) -now;
+//     const now = new Date();
+//     const diff =new Date(ticket.departureDateTime) -now;
 
-    if (diff <= 0)
-      return <span className="text-red-600 font-bold">Departed</span>;
+//     if (diff <= 0)
+//       return <span className="text-red-600 font-bold">Departed</span>;
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+//     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+//     const hours = Math.floor(
+//       (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+//     );
+//     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-    return (
-      <span className="text-green-600 font-bold">
-        {days}d {hours}h {minutes}m left
-      </span>
-    );
-  };
+//     return (
+//       <span className="text-green-600 font-bold">
+//         {days}d {hours}h {minutes}m left
+//       </span>
+//     );
+//   };
+
+const getCountdown = () => {
+  if (!ticket?.departureDateTime) return "N/A";
+
+  const now = new Date();
+  const diff = new Date(ticket.departureDateTime) - now;
+
+  if (diff <= 0) {
+    return <span className="text-red-600 font-bold">Departed</span>;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor(
+    (diff % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const seconds = Math.floor(
+    (diff % (1000 * 60)) / 1000
+  );
+
+  return (
+    <span className="text-green-600 font-bold">
+      {days}d {hours}h {minutes}m {seconds}s left
+    </span>
+  );
+};
+
 
  console.log(getCountdown())
   const handleBooking = async () => {

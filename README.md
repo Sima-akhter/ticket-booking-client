@@ -1,12 +1,68 @@
-# React + Vite
+# Ticket Booking Platform (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a modern, responsive **ticket booking web application frontend** built with **React 19** and a powerful ecosystem of libraries. The project focuses on performance, clean UI/UX, secure authentication, and smooth user interactions.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ Tech Stack Overview
 
-## Expanding the ESLint configuration
+The application is developed using the following core technologies and libraries:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+###  Frontend Framework
+- **React 19** – Component-based UI development with improved performance
+- **React DOM** – Efficient rendering for the browser
+- **React Router v7** – Advanced client-side routing and navigation
+
+### Styling & UI
+- **Tailwind CSS v4** – Utility-first CSS framework for rapid and responsive design
+- **@tailwindcss/vite** – Seamless Tailwind integration with Vite
+- **React Icons** – Rich icon support for better visual experience
+- **Lucide React** – Clean and modern SVG icons
+- **Framer Motion** – Smooth animations and transitions
+
+###  Authentication & Security
+- **Firebase** – User authentication and secure session handling
+
+###  Data Fetching & State Management
+- **Axios** – Promise-based HTTP client for API communication
+- **@tanstack/react-query** – Efficient server-state management, caching, and synchronization
+
+###  Forms & User Input
+- **React Hook Form** – Lightweight and performant form handling with validation
+
+###  Notifications & Alerts
+- **React Toastify** – Non-blocking toast notifications
+- **SweetAlert2** – Elegant modal alerts and confirmations
+
+###  Data Visualization
+- **Recharts** – Simple and flexible charting library for dashboards and analytics
+
+###  Media & UI Components
+- **React Responsive Carousel** – Mobile-friendly image and content sliders
+
+---
+
+##  Key Highlights
+
+- Fully responsive design
+- Clean and maintainable component structure
+- Secure authentication flow
+- Smooth animations and modern UI
+- Optimized API data handling
+- Scalable and production-ready setup
+
+---
+
+##  Purpose
+
+This frontend is designed to work with a backend API to provide a complete ticket booking experience, including browsing tickets, viewing details, booking, payments, and user dashboards.
+
+---
+
+##  License
+
+This project is for educational and development purposes.
+
+---  
+
+Happy Coding 
