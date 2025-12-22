@@ -17,7 +17,7 @@ const AdminProfile = () => {
       return res.data;
     },
   });
-
+console.log(admin)
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -34,6 +34,7 @@ const AdminProfile = () => {
           <img
             src={admin?.photoURL || "/default-avatar.png"}
             alt="Admin"
+            referrerPolicy="no-referrer"
             className="w-32 h-32 rounded-full border-4 border-purple-500 shadow-lg object-cover"
           />
         </div>

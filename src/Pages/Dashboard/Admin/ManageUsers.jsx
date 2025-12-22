@@ -3,18 +3,18 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
-    const axiosSecure = useAxiosSecure;
+    const axiosSecure = useAxiosSecure();
 
 
     const { data: users = [], refetch } = useQuery({
-        queryKey: ['users'],
+        queryKey: ['manageUsers'],
         queryFn: async () => {
             const res = await axiosSecure.get('/admin/users');
             return res.data;
         }
     });
 
-
+console.log(users)
     const changeRole = async (id, role) => {
         await axiosSecure.patch(`/admin/users/role/${id}`, { role });
         Swal.fire('Updated!', '', 'success');

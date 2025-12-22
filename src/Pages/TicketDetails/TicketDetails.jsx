@@ -35,7 +35,7 @@ const TicketDetails = () => {
         setLoading(false);
       });
   }, [id]);
-
+console.log(ticket)
   
   const getTransportIcon = (type) => {
     switch (type?.toLowerCase()) {
@@ -54,13 +54,14 @@ const TicketDetails = () => {
 
   
   const getCountdown = () => {
-    if (!ticket?.departureDate || !ticket?.departureTime) return "N/A";
+    if (!ticket?.departureDateTime
+) return "N/A";
 
-    const departure = new Date(
-      `${ticket.departureDate}T${ticket.departureTime}:00`
-    );
+    // const departure = new Date(
+    //   `${ticket.departureDate}T${ticket.departureTime}:00`
+    // );
     const now = new Date();
-    const diff = departure - now;
+    const diff =new Date(ticket.departureDateTime) -now;
 
     if (diff <= 0)
       return <span className="text-red-600 font-bold">Departed</span>;
@@ -78,7 +79,7 @@ const TicketDetails = () => {
     );
   };
 
- 
+ console.log(getCountdown())
   const handleBooking = async () => {
     if (quantity < 1) {
       alert("Quantity must be at least 1");

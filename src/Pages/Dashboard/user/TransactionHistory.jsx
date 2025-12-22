@@ -6,7 +6,7 @@ const TransactionHistory = () => {
   const [payments, setPayments] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/payments/${user.email}`)
+    fetch(`http://localhost:5000/payments/${user.email}`)
       .then(res => res.json())
       .then(data => setPayments(data));
   }, [user.email]);

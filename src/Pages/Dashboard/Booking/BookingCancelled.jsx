@@ -1,8 +1,15 @@
+
 import React from 'react'
+import { Link } from 'react-router'
 
 const BookingCancelled = () => {
   return (
-    <div>BookingCancelled</div>
+    <div>
+        <h2>Payment is cancelled. Please try again</h2>
+        <Link to="/dashboard/bookingCancelled">
+        <button className='btn btn-primary text-black'>Try Again</button>
+        </Link>
+    </div>
   )
 }
 

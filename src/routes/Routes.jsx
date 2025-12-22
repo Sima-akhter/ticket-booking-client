@@ -19,7 +19,7 @@ import TransactionHistory from "../Pages/Dashboard/user/TransactionHistory";
 import AllTickets from "../Pages/AllTickets";
 import MyProfile from "../Pages/MyProfile/MyProfile";
 import AdminProfile from "../Pages/Dashboard/Admin/AdminProfile";
-import AdvertiseTickets from "../Pages/Dashboard/Admin/AdvertiseTickets";
+
 import ManageTickets from "../Pages/Dashboard/Admin/ManageTickets";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import AdminRoute from "./AdminRoute";
@@ -29,6 +29,7 @@ import BookingCancelled from "../Pages/Dashboard/Booking/BookingCancelled";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import About from "../Pages/About/AboutUs";
 import AboutUs from "../Pages/About/AboutUs";
+import AdminAdvertiseTickets from "../Pages/Dashboard/Admin/AdminAdvertiseTickets";
 
 export const router = createBrowserRouter([
     {
@@ -161,7 +162,7 @@ export const router = createBrowserRouter([
 
             {
                 path: 'advertiseTickets',
-                element: <AdminRoute><AdvertiseTickets></AdvertiseTickets></AdminRoute>
+                element: <AdminRoute><AdminAdvertiseTickets></AdminAdvertiseTickets></AdminRoute>
             },
             {
                 path: 'manageTickets',
