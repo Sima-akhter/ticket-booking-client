@@ -7,14 +7,14 @@ const RequestedBookings = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch(`server-kappa-lemon.vercel.app
+    fetch(`https://server-kappa-lemon.vercel.app
 /vendor/bookings/${user.email}`)
       .then(res => res.json())
       .then(data => setBookings(data));
   }, [user.email]);
 
   const handleAccept = (id) => {
-    fetch(`server-kappa-lemon.vercel.app
+    fetch(`https://server-kappa-lemon.vercel.app
 /bookings/accept/${id}`, {
       method: "PATCH",
     })
@@ -26,7 +26,7 @@ const RequestedBookings = () => {
   };
 
   const handleReject = (id) => {
-    fetch(`server-kappa-lemon.vercel.app
+    fetch(`https://server-kappa-lemon.vercel.app
 /bookings/reject/${id}`, {
       method: "PATCH",
     })

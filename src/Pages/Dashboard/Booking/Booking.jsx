@@ -16,7 +16,7 @@ const Booking = () => {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`server-kappa-lemon.vercel.app
+    fetch(`https://server-kappa-lemon.vercel.app
 /tickets/${id}`)
       .then(res => res.json())
       .then(data => {
@@ -52,7 +52,7 @@ const Booking = () => {
         totalPrice: bookingQuantity * ticket.price,
       };
 
-      const res = await fetch("server-kappa-lemon.vercel.app/bookings", {
+      const res = await fetch("https://server-kappa-lemon.vercel.app/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

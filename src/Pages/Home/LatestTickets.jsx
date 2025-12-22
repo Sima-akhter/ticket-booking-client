@@ -6,7 +6,7 @@ const LatestTickets = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    fetch("server-kappa-lemon.vercel.app/tickets/letast")
+    fetch("https://server-kappa-lemon.vercel.app/tickets/letast")
       .then(res => res.json())
       .then(data => setTickets(data));
   }, []);

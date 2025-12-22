@@ -24,7 +24,7 @@ const TicketDetails = () => {
 
   
   useEffect(() => {
-    fetch(`server-kappa-lemon.vercel.app/tickets/${id}`)
+    fetch(`https://server-kappa-lemon.vercel.app/tickets/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setTicket(data);

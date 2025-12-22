@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 
 const axiosSecure = axios.create({
-    baseURL: 'server-kappa-lemon.vercel.app'
+    baseURL: 'https://server-kappa-lemon.vercel.app'
 })
 
 const useAxiosSecure = () => {
