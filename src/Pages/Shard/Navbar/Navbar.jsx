@@ -32,38 +32,71 @@ const Navbar = () => {
       {user && (
         <>
           <li>
-            <NavLink to="/allTickets" className="text-white font-semibold text-lg hover:text-purple-200">
+            <NavLink
+              to="/allTickets"
+              className="text-white font-semibold text-lg hover:text-purple-200"
+            >
               All Tickets
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard" className="text-white font-semibold text-lg hover:text-purple-200">
+            <NavLink
+              to="/dashboard"
+              className="text-white font-semibold text-lg hover:text-purple-200"
+            >
               Dashboard
             </NavLink>
           </li>
         </>
       )}
+
+      {/* 🔹 Mobile only Login / Register */}
+      {!user && (
+        <div className="mt-4 flex flex-col gap-3 lg:hidden">
+          <Link
+            to="/login"
+            className="btn bg-white text-purple-700 font-bold rounded-full"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="btn bg-white text-purple-700 font-bold rounded-full"
+          >
+            Register
+          </Link>
+        </div>
+      )}
     </>
   );
 
   return (
-    <div className="navbar bg-gradient-to-r from-purple-700 fixed top-0 right-0 left-0 z-50  via-purple-600 to-pink-600 shadow-xl px-4 overflow-x-hidden">
+    <div className="navbar bg-gradient-to-r from-purple-700 via-purple-600 to-pink-600 fixed top-0 left-0 right-0 z-50 shadow-xl px-4 overflow-x-hidden">
       
       {/* Navbar Start */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-7 w-7 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
             </svg>
           </div>
 
-          {/* Mobile Menu */}
+          {/* 📱 Mobile Menu */}
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 w-52 p-4 bg-purple-800 rounded-xl shadow-xl z-50 overflow-hidden"
+            className="menu menu-sm dropdown-content mt-3 w-56 p-4 bg-purple-800 rounded-xl shadow-xl z-[9999]"
           >
             {navLinks}
           </ul>
@@ -85,8 +118,11 @@ const Navbar = () => {
       <div className="navbar-end gap-4">
         {user ? (
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button"
-              className="btn btn-ghost btn-circle avatar ring-2 ring-white">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar ring-2 ring-white"
+            >
               <div className="w-11 rounded-full overflow-hidden">
                 <img src={user?.photoURL || userimg} alt="user" />
               </div>
@@ -94,7 +130,7 @@ const Navbar = () => {
 
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 w-56 p-4 bg-purple-800 rounded-xl shadow-xl text-white overflow-hidden"
+              className="menu menu-sm dropdown-content mt-3 w-56 p-4 bg-purple-800 rounded-xl shadow-xl text-white z-[9999]"
             >
               <li className="text-center font-bold border-b border-purple-600 pb-2">
                 {user?.displayName || "User"}
@@ -103,7 +139,10 @@ const Navbar = () => {
                 <NavLink to="/myProfile">My Profile</NavLink>
               </li>
               <li>
-                <button onClick={handleLogOut} className="text-red-300 font-bold">
+                <button
+                  onClick={handleLogOut}
+                  className="text-red-300 font-bold"
+                >
                   Logout
                 </button>
               </li>
@@ -111,10 +150,16 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <Link to="/login" className="btn bg-white text-purple-700 font-bold rounded-full px-6">
+            <Link
+              to="/login"
+              className="btn bg-white text-purple-700 font-bold rounded-full px-6 hidden lg:inline-flex"
+            >
               Login
             </Link>
-            <Link to="/register" className="btn bg-white text-purple-700 font-bold rounded-full px-6 hidden md:inline-flex">
+            <Link
+              to="/register"
+              className="btn bg-white text-purple-700 font-bold rounded-full px-6 hidden lg:inline-flex"
+            >
               Register
             </Link>
           </>

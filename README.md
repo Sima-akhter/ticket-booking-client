@@ -3,7 +3,7 @@
 This is a modern, responsive **ticket booking web application frontend** built with **React 19** and a powerful ecosystem of libraries. The project focuses on performance, clean UI/UX, secure authentication, and smooth user interactions.
 
 ---
-
+liv link : https://glittering-phoenix-2e06e7.netlify.app
  Tech Stack Overview
 
 The application is developed using the following core technologies and libraries:
