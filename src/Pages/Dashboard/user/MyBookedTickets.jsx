@@ -88,7 +88,7 @@ const MyBookedTickets = () => {
           <p className="text-xl font-bold opacity-40 italic">You haven't booked any tickets yet.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {bookings.map((b, index) => {
             const remaining = getRemainingTime(b.departureDateTime);
             const isExpired = remaining === "Expired";
