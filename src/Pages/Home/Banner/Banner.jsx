@@ -1,129 +1,157 @@
+
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import bannerImg1 from '../../../assets/banner6.png';
-import bannerImg2 from '../../../assets/banner2.png';
-import bannerImg4 from '../../../assets/banner4.png';
+import bannerImg1 from '../../../assets/heroimg1.png';
+import bannerImg2 from '../../../assets/heroimg2.png';
+import bannerImg4 from '../../../assets/heroimg3.png';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router';
 
 const Banner = () => {
-    return (
-        <div className="relative w-full h-screen overflow-hidden">
-            <Carousel
-                autoPlay={true}
-                infiniteLoop={true}
-                interval={5000}
-                transitionTime={1000}
-                showThumbs={false}
-                showStatus={false}
-                showArrows={false}
-                swipeable={true}
-                emulateTouch={true}
-                className="h-full"
-            >
-                {/* Slide 1 */}
-                <div className="relative h-screen">
-                    <img 
-                        src={bannerImg1} 
-                        alt="Book Bus Tickets"
-                        className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-purple-800 to-transparent opacity-80"></div>
-                    <div className="absolute inset-0 flex items-center justify-start px-8 lg:px-24">
-                        <div className="max-w-2xl text-left animate-fadeIn">
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
-                                Explore Bangladesh <br /> with Comfort
-                            </h1>
-                            <p className="text-lg md:text-2xl text-purple-100 mt-6 font-medium">
-                                Book bus, train, launch & flight tickets instantly at the best price
-                            </p>
-                            <div className="mt-10">
-                                <Link 
-                                    to="/allTickets" 
-                                    className="btn bg-white text-purple-700 font-bold text-lg px-10 py-4 rounded-full shadow-2xl hover:bg-purple-100 transform hover:scale-105 transition-all duration-300"
-                                >
-                                    Book Now
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Slide 2 */}
-                <div className="relative h-screen">
-                    <img 
-                        src={bannerImg2} 
-                        alt="Train Journey"
-                        className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-l from-pink-900 via-purple-800 to-transparent opacity-80"></div>
-                    <div className="absolute inset-0 flex items-center justify-end px-8 lg:px-24">
-                        <div className="max-w-2xl text-right animate-fadeIn">
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
-                                Fast, Safe & <br /> Affordable Travel
-                            </h1>
-                            <p className="text-lg md:text-2xl text-pink-100 mt-6 font-medium">
-                                Thousands of routes across the country – choose your perfect journey
-                            </p>
-                            <div className="mt-10">
-                                <Link 
-                                    to="/allTickets" 
-                                    className="btn bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg px-10 py-4 rounded-full shadow-2xl hover:shadow-purple-500 transform hover:scale-105 transition-all duration-300"
-                                >
-                                    Explore Tickets
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Slide 3 */}
-                <div className="relative h-screen">
-                    <img 
-                        src={bannerImg4} 
-                        alt="Launch & Flight"
-                        className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-purple-900 via-transparent to-pink-800 opacity-80"></div>
-                    <div className="absolute inset-0 flex items-center justify-center px-8">
-                        <div className="max-w-4xl text-center animate-fadeIn">
-                            <h1 className="text-4xl md:text-6xl lg:text-8xl font-extrabold text-white leading-tight drop-shadow-2xl">
-                                TicketBari – Your Travel Partner
-                            </h1>
-                            <p className="text-xl md:text-3xl text-purple-100 mt-8 font-semibold">
-                                One platform for all your travel needs
-                            </p>
-                            <div className="mt-12 flex gap-6 justify-center">
-                                <Link 
-                                    to="/allTickets" 
-                                    className="btn bg-white text-purple-700 font-bold text-lg px-12 py-4 rounded-full shadow-2xl hover:bg-purple-100 transform hover:scale-110 transition-all duration-300"
-                                >
-                                    All Tickets
-                                </Link>
-                                <Link 
-                                    to="/register" 
-                                    className="btn bg-transparent border-4 border-white text-white font-bold text-lg px-12 py-4 rounded-full hover:bg-white hover:text-purple-700 transition-all duration-300"
-                                >
-                                    Sign Up Free
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Carousel>
-
-            {/* Custom CSS for fade-in animation */}
-            <style jsx>{`
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(30px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fadeIn {
-                    animation: fadeIn 1.2s ease-out forwards;
-                }
-            `}</style>
+  return (
+    <div className="relative w-full h-screen min-h-[700px] overflow-hidden bg-white">
+      <Carousel
+        autoPlay
+        infiniteLoop
+        interval={5500}
+        transitionTime={800}
+        showThumbs={false}
+        showStatus={false}
+        showArrows={true}
+        swipeable
+        emulateTouch
+        className="h-full"
+        renderIndicator={(onClickHandler, isSelected, index, label) => {
+          const defStyle = {
+            marginLeft: 8,
+            marginRight: 8,
+            cursor: "pointer",
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            background: isSelected ? "#6b21a8" : "rgba(107, 33, 168, 0.3)", // purple theme
+            display: "inline-block",
+            transition: "all 0.3s ease",
+            boxShadow: isSelected ? "0 0 0 3px rgba(107, 33, 168, 0.2)" : "none",
+          };
+          return (
+            <span
+              style={defStyle}
+              onClick={onClickHandler}
+              onKeyDown={onClickHandler}
+              value={index}
+              key={index}
+              role="button"
+              tabIndex={0}
+            />
+          );
+        }}
+      >
+        {/* Slide 1 - Left aligned */}
+        <div className="relative h-screen bg-white">
+          <img
+            src={bannerImg1}
+            alt="Explore Bangladesh with Comfort"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.92] opacity-90"
+          />
+          
+          <div className="absolute inset-0 flex items-center justify-start px-6 sm:px-12 lg:px-24">
+            <div className="max-w-3xl text-left space-y-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-gray-900">
+                Explore Bangladesh
+                <br className="hidden sm:block" /> with Comfort
+              </h1>
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 font-light max-w-2xl">
+                Book bus, train, launch & flight tickets instantly — best prices, zero hassle
+              </p>
+              <div className="pt-6">
+                <Link
+                  to="/allTickets"
+                  className="inline-block px-10 py-4 bg-purple-700 text-white font-semibold text-lg rounded-full shadow-lg hover:bg-purple-800 transform hover:scale-105 transition-all duration-300"
+                >
+                  Book Now →
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-    );
+
+        {/* Slide 2 - Right aligned */}
+        <div className="relative h-screen bg-white">
+          <img
+            src={bannerImg2}
+            alt="Fast Safe Affordable Travel"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.90] opacity-90"
+          />
+          
+          <div className="absolute inset-0 flex items-center justify-end px-6 sm:px-12 lg:px-24">
+            <div className="max-w-3xl text-right space-y-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight text-gray-900">
+                Fast, Safe & Affordable
+                <br className="hidden sm:block" /> Travel
+              </h1>
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 font-light max-w-2xl ml-auto">
+                Thousands of routes across Bangladesh — find your perfect journey today
+              </p>
+              <div className="pt-6 flex justify-end">
+                <Link
+                  to="/allTickets"
+                  className="inline-block px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg rounded-full shadow-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300"
+                >
+                  Explore Routes →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Slide 3 - Center aligned */}
+        <div className="relative h-screen bg-white">
+          <img
+            src={bannerImg4}
+            alt="TicketBari Your Travel Partner"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.92] opacity-88"
+          />
+          
+          <div className="absolute inset-0 flex items-center justify-center px-6 sm:px-12">
+            <div className="max-w-4xl text-center space-y-8">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-tight tracking-tight text-gray-900">
+                TicketBari
+              </h1>
+              <p className="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-800">
+                Your All-in-One Travel Partner
+              </p>
+              <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+                One platform for buses, trains, launches & flights — simple, fast, reliable
+              </p>
+              <div className="pt-8 flex flex-col sm:flex-row gap-6 justify-center">
+                <Link
+                  to="/allTickets"
+                  className="px-12 py-5 bg-purple-700 text-white font-semibold text-lg rounded-full shadow-lg hover:bg-purple-800 transform hover:scale-105 transition-all duration-300"
+                >
+                  Browse All Tickets
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-12 py-5 border-2 border-purple-700 text-purple-700 font-semibold text-lg rounded-full hover:bg-purple-700 hover:text-white transition-all duration-300"
+                >
+                  Sign Up Free
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Carousel>
+
+      {/* Animation */}
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default Banner;

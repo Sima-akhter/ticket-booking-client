@@ -1,12 +1,13 @@
 import React from "react";
 import useRole from "../../hooks/useRole";
 import useAuth from "../../hooks/useAuth";
-import { LogOut, Mail, User, Shield, Users } from "lucide-react";
+import { LogOut, Mail, User, Shield, Users, Calendar, Activity, CheckCircle2 } from "lucide-react";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const MyProfile = () => {
   const { user: authUser, logOut } = useAuth();
-  const { user, isLoading } = useRole(); 
+  const { user, isLoading } = useRole();
 
   const handleLogout = () => {
     logOut()
@@ -17,11 +18,26 @@ const MyProfile = () => {
   const getRoleBadge = (role) => {
     switch (role?.toLowerCase()) {
       case "admin":
-        return { color: "bg-red-100 text-red-700 border-red-200", icon: <Shield className="w-5 h-5" />, label: "Admin" };
+        return { 
+          color: "bg-error/10 text-error border-error/20", 
+          icon: <Shield className="w-5 h-5" />, 
+          label: "Administrator",
+          gradient: "from-red-500 to-rose-600"
+        };
       case "vendor":
-        return { color: "bg-blue-100 text-blue-700 border-blue-200", icon: <Users className="w-5 h-5" />, label: "Vendor" };
+        return { 
+          color: "bg-info/10 text-info border-info/20", 
+          icon: <Users className="w-5 h-5" />, 
+          label: "Service Vendor",
+          gradient: "from-blue-500 to-cyan-600"
+        };
       default:
-        return { color: "bg-purple-100 text-purple-700 border-purple-200", icon: <User className="w-5 h-5" />, label: "User" };
+        return { 
+          color: "bg-primary/10 text-primary border-primary/20", 
+          icon: <User className="w-5 h-5" />, 
+          label: "Regular User",
+          gradient: "from-purple-500 to-indigo-600"
+        };
     }
   };
 
@@ -29,128 +45,161 @@ const MyProfile = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-purple-600"></div>
+      <div className="flex justify-center items-center h-screen bg-base-100">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
     );
   }
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-white min-h-screen">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-extrabold">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-600">
-              My Profile
-            </span>
-          </h1>
-          <p className="text-gray-600 mt-4 text-lg">Manage your account and view your role in TicketBari</p>
-        </div>
+    <section className="py-12 px-4 bg-base-200 min-h-screen transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6"
+        >
+          <div>
+            <h1 className="text-4xl md:text-5xl font-black text-base-content tracking-tight">
+              User <span className="text-primary">Profile</span>
+            </h1>
+            <p className="text-base-content/60 mt-2 font-medium">Manage your personal information and account security.</p>
+          </div>
+          <div className="flex gap-3">
+             <div className="badge badge-outline badge-lg py-4 px-6 font-bold opacity-70">
+                Status: Online
+             </div>
+          </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Left: Profile Card */}
-          <div className="lg:col-span-1">
-            <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-purple-200/50 p-8 text-center">
-              <div className="relative mb-6 inline-block">
-                <div className="w-40 h-40 rounded-full overflow-hidden border-8 border-white shadow-xl group">
-                  <img
-                    src={authUser?.photoURL || user?.photoURL || "https://i.ibb.co.com/0jD3Z7k/user.png"}
-                    alt={authUser?.displayName || "User"}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* Left Side: Identity Card */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="lg:col-span-4"
+          >
+            <div className="card bg-base-100 shadow-xl border border-base-300 overflow-hidden rounded-[2.5rem]">
+              <div className={`h-32 w-full bg-gradient-to-r ${roleInfo.gradient}`}></div>
+              <div className="px-8 pb-8">
+                <div className="relative -mt-16 mb-6">
+                  <div className="avatar">
+                    <div className="w-32 h-32 rounded-[2.5rem] ring ring-base-100 ring-offset-base-100 ring-offset-4 overflow-hidden shadow-2xl">
+                      <img
+                        src={authUser?.photoURL || user?.photoURL || "https://i.ibb.co/0jD3Z7k/user.png"}
+                        alt="Profile"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 right-4 w-6 h-6 bg-green-500 rounded-full border-4 border-base-100 shadow-lg"></div>
                 </div>
-                <div className="absolute bottom-2 right-2 w-10 h-10 bg-green-500 rounded-full border-4 border-white"></div>
-              </div>
 
-              <h2 className="text-3xl font-extrabold text-gray-800 mb-3">
-                {authUser?.displayName || user?.name || "User"}
-              </h2>
+                <h2 className="text-2xl font-black text-base-content mb-1">
+                  {authUser?.displayName || user?.name || "Anonymous User"}
+                </h2>
+                <div className="flex items-center gap-2 text-base-content/60 mb-6 font-medium">
+                  <Mail className="w-4 h-4" /> {authUser?.email || user?.email}
+                </div>
 
-              <div className="flex justify-center gap-3 mb-6">
-                <span className={`px-6 py-3 rounded-full font-bold text-lg border-2 flex items-center gap-2 ${roleInfo.color}`}>
+                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border font-bold text-sm mb-8 ${roleInfo.color}`}>
                   {roleInfo.icon}
                   {roleInfo.label}
-                </span>
-              </div>
+                </div>
 
-              <div className="space-y-4 text-left">
-                <div className="flex items-center gap-4 text-gray-700">
-                  <Mail className="w-6 h-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-semibold">{authUser?.email || user?.email}</p>
+                <div className="divider opacity-50"></div>
+
+                <button
+                  onClick={handleLogout}
+                  className="btn btn-error btn-block rounded-2xl gap-3 font-bold text-white shadow-lg shadow-error/20"
+                >
+                  <LogOut className="w-5 h-5" />
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Side: Details & Permissions */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="lg:col-span-8 space-y-6"
+          >
+            {/* Role & Permissions Card */}
+            <div className="card bg-base-100 shadow-xl border border-base-300 rounded-[2.5rem]">
+              <div className="card-body p-8">
+                <h3 className="text-xl font-black flex items-center gap-3 mb-6">
+                  <Activity className="text-primary" /> Privileges & Access
+                </h3>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="p-6 bg-base-200 rounded-3xl border border-base-300">
+                    <p className="text-xs font-black uppercase tracking-widest opacity-40 mb-4">Identity Verification</p>
+                    <div className="flex items-center gap-4">
+                        <div className={`p-4 rounded-2xl ${roleInfo.color}`}>
+                            {roleInfo.icon}
+                        </div>
+                        <div>
+                            <p className="text-lg font-bold">{roleInfo.label}</p>
+                            <p className="text-xs opacity-60">Verified Account Access</p>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-xs font-black uppercase tracking-widest opacity-40">System Capabilities</p>
+                    <ul className="space-y-3">
+                      {(user?.role === "admin" ? [
+                        "Full administrative control over users",
+                        "Audit and verify all ticket submissions",
+                        "Global marketing & ad management"
+                      ] : user?.role === "vendor" ? [
+                        "Publish and manage inventory",
+                        "Manage booking requests & schedules",
+                        "Access financial revenue analytics"
+                      ] : [
+                        "Real-time ticket browsing & search",
+                        "Secure automated payment gateway",
+                        "Digital ticket history & management"
+                      ]).map((perm, idx) => (
+                        <li key={idx} className="flex items-center gap-3 text-sm font-semibold opacity-80">
+                          <CheckCircle2 className="w-4 h-4 text-success" /> {perm}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
-
-              <button
-                onClick={handleLogout}
-                className="mt-8 w-full btn bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 rounded-full shadow-xl hover:shadow-purple-500 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3"
-              >
-                <LogOut className="w-5 h-5" />
-                Logout
-              </button>
-            </div>
-          </div>
-
-          {/* Right: Details */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Role Information */}
-            <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-purple-200/50 p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Role & Permissions</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-gray-600 mb-3">Your Current Role</p>
-                  <div className={`inline-flex items-center gap-3 px-6 py-4 rounded-2xl font-bold text-xl ${roleInfo.color}`}>
-                    {roleInfo.icon}
-                    {roleInfo.label}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-gray-600 mb-3">What You Can Do</p>
-                  <ul className="space-y-2">
-                    {user?.role === "admin" && (
-                      <>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Manage all users & tickets</li>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Approve/Reject tickets</li>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Advertise tickets on homepage</li>
-                      </>
-                    )}
-                    {user?.role === "vendor" && (
-                      <>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Add & manage your tickets</li>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Accept/Reject booking requests</li>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> View revenue overview</li>
-                      </>
-                    )}
-                    {(!user?.role || user?.role === "user") && (
-                      <>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Browse & book tickets</li>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> View booked tickets</li>
-                        <li className="flex items-center gap-3 text-gray-700"><div className="w-2 h-2 bg-green-500 rounded-full"></div> Make secure payments</li>
-                      </>
-                    )}
-                  </ul>
-                </div>
-              </div>
             </div>
 
-            {/* Account Info */}
-            <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-purple-200/50 p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6">Account Information</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-gray-600">Account Created</p>
-                  <p className="text-xl font-semibold">January 2025</p>
+            {/* Account Insights */}
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="card bg-base-100 shadow-xl border border-base-300 rounded-[2.5rem] p-8 flex-row items-center gap-6">
+                    <div className="p-4 bg-primary/10 rounded-2xl text-primary">
+                        <Calendar className="w-8 h-8" />
+                    </div>
+                    <div>
+                        <p className="text-xs font-black opacity-40 uppercase tracking-tighter">Member Since</p>
+                        <p className="text-xl font-black">January 2025</p>
+                    </div>
                 </div>
-                <div>
-                  <p className="text-gray-600">Last Login</p>
-                  <p className="text-xl font-semibold">Today</p>
+                
+                <div className="card bg-base-100 shadow-xl border border-base-300 rounded-[2.5rem] p-8 flex-row items-center gap-6">
+                    <div className="p-4 bg-secondary/10 rounded-2xl text-secondary">
+                        <Shield className="w-8 h-8" />
+                    </div>
+                    <div>
+                        <p className="text-xs font-black opacity-40 uppercase tracking-tighter">Security Status</p>
+                        <p className="text-xl font-black text-success">Protected</p>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+
+          </motion.div>
         </div>
       </div>
     </section>

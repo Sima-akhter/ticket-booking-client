@@ -5,6 +5,10 @@ import TicketCard from '../../Advertisement/TicketCard'
 import PopularRoutes from '../PopularRoutes/PopularRoutes'
 import WhyChooseUs from './WhyChooseUs/WhyChooseUs'
 import LatestTickets from '../LatestTickets'
+import Coverage from '../Banner/Coverage'
+import Newsletter from './Newsletter'
+import FAQ from './FaqSection'
+
 
 const Home = () => {
   return (
@@ -16,6 +20,9 @@ const Home = () => {
             <TicketCard></TicketCard>
             <PopularRoutes></PopularRoutes>
             <WhyChooseUs></WhyChooseUs>
+            <Coverage></Coverage>
+            <FAQ></FAQ>
+            <Newsletter></Newsletter>
 
         </div>
     </div>

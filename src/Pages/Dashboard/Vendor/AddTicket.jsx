@@ -2,248 +2,172 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaTicketAlt, FaMapMarkerAlt, FaBus, FaDollarSign, FaCalendarAlt, FaImage, FaUser, FaEnvelope, FaCheck } from "react-icons/fa";
+import { 
+  FaTicketAlt, FaMapMarkerAlt, FaBus, FaDollarSign, 
+  FaCalendarAlt, FaImage, FaUser, FaEnvelope, 
+  FaCheck, FaAlignLeft, FaListUl 
+} from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AddTicket = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-//   const handleAddTicket = async (data) => {
-   
-//     const selectedPerks = Object.keys(data.perks || {}).filter(key => data.perks[key]);
-//     const ticketData = {
-//       ...data,
-//       perks: selectedPerks,
-//       price: parseFloat(data.price),
-//       ticketQuantity: parseInt(data.ticketQuantity),
-//       vendorName: user?.displayName || data.vendorName,
-//       vendorEmail: user?.email || data.vendorEmail,
-//     };
+  const handleAddTicket = async (data) => {
+    const ticketData = {
+      ...data,
+      price: parseFloat(data.price),
+      ticketQuantity: parseInt(data.ticketQuantity),
+      vendorName: user?.displayName,
+      vendorEmail: user?.email,
+      status: "pending",
+      createdAt: new Date(),
+    };
 
-//     try {
-//       const res = await axiosSecure.post("/tickets", ticketData);
-//       console.log("Ticket Added:", res.data);
-
-//     } catch (error) {
-//       console.error("Error adding ticket:", error);
-//     }
-//   };
-
-
-const handleAddTicket = async (data) => {
-  const selectedPerks = Object.keys(data.perks || {}).filter(
-    key => data.perks[key]
-  );
-
-  const ticketData = {
-    ...data,
-    perks: selectedPerks,
-    price: parseFloat(data.price),
-    ticketQuantity: parseInt(data.ticketQuantity),
-    vendorName: user?.displayName,
-    vendorEmail: user?.email,
-    status: "pending", 
-  };
-
-  try {
-    const res = await axiosSecure.post("/tickets", ticketData);
-
-    if (res.data?.insertedId) {
+    try {
+      const res = await axiosSecure.post("/tickets", ticketData);
+      if (res.data?.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Ticket Submitted!",
+          text: "Wait for admin approval.",
+          confirmButtonColor: "#4F46E5",
+        });
+        reset(); // ফরমটি খালি করার জন্য
+      }
+    } catch (error) {
       Swal.fire({
-        icon: "success",
-        title: "Ticket Added!",
-        text: "Your ticket has been submitted for admin approval.",
-        confirmButtonColor: "#7c3aed",
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong. Please try again.",
       });
     }
-  } catch (error) {
-    console.error("Error adding ticket:", error);
+  };
 
-    Swal.fire({
-      icon: "error",
-      title: "Oops!",
-      text: "Failed to add ticket. Please try again.",
-      confirmButtonColor: "#dc2626",
-    });
-  }
-};
-
-
-
+  const inputClass = "w-full px-4 py-3 rounded-xl border border-base-300 bg-base-100 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 outline-none text-base-content";
+  const labelClass = "flex items-center gap-2 text-sm font-semibold text-base-content/80 mb-2";
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-4xl md:text-6xl font-extrabold text-center mb-12">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-600">
-            Add New Ticket
-          </span>
-        </h2>
+    <section className="py-24 px-4 bg-base-200 min-h-screen transition-colors duration-300">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-5xl font-black mb-4">
+            <span className="text-3xl font-bold text-center mb-6">
+              Add New Ticket
+            </span>
+          </h2>
+          <p className="text-base-content/60">Fill in the details to list your transport ticket.</p>
+        </div>
 
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-purple-200/50 p-8 md:p-12">
-          <form onSubmit={handleSubmit(handleAddTicket)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-           
-            <div className="relative">
-              <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-2">
-                <FaTicketAlt className="text-purple-600" /> Ticket Title
-              </label>
-              <input
-                type="text"
-                {...register("ticketTitle", { required: "Ticket title is required" })}
-                className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-                placeholder="e.g., Dhaka to Cox's Bazar Deluxe"
-              />
-              {errors.ticketTitle && <p className="text-red-500 text-sm mt-2">{errors.ticketTitle.message}</p>}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative">
-                <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-2">
-                  <FaMapMarkerAlt className="text-purple-600" /> From
-                </label>
+        {/* Form Container */}
+        <div className="bg-base-100 rounded-3xl shadow-xl border border-base-300 p-6 md:p-10 transition-all">
+          <form onSubmit={handleSubmit(handleAddTicket)} className="space-y-6">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Ticket Title */}
+              <div className="md:col-span-2">
+                <label className={labelClass}><FaTicketAlt className="text-primary"/> Ticket Title</label>
                 <input
                   type="text"
-                  {...register("from", { required: "From location is required" })}
-                  className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-                  placeholder="Dhaka"
+                  {...register("ticketTitle", { required: "Title is required" })}
+                  className={inputClass}
+                  placeholder="e.g., Hanif Enterprise | Dhaka - Cox's Bazar"
                 />
-                {errors.from && <p className="text-red-500 text-sm mt-2">{errors.from.message}</p>}
+                {errors.ticketTitle && <span className="text-error text-xs mt-1">{errors.ticketTitle.message}</span>}
               </div>
-              <div className="relative">
-                <label className="text-lg font-semibold text-gray-700 mb-2">To</label>
-                <input
-                  type="text"
-                  {...register("to", { required: "To location is required" })}
-                  className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-                  placeholder="Cox's Bazar"
-                />
-                {errors.to && <p className="text-red-500 text-sm mt-2">{errors.to.message}</p>}
-              </div>
-            </div>
 
-            
-            <div className="relative">
-              <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-2">
-                <FaBus className="text-purple-600" /> Transport Type
-              </label>
-              <select
-                {...register("transportType", { required: "Transport type is required" })}
-                className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-              >
-                <option value="">Select transport</option>
-                <option value="Bus">Bus</option>
-                <option value="Train">Train</option>
-                <option value="Launch">Launch</option>
-                <option value="Plane">Plane</option>
-              </select>
-              {errors.transportType && <p className="text-red-500 text-sm mt-2">{errors.transportType.message}</p>}
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
+              {/* Journey Details */}
               <div>
-                <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-2">
-                  <FaDollarSign className="text-purple-600" /> Price (per unit)
-                </label>
-                <input
-                  type="number"
-                  {...register("price", { required: "Price is required", min: 1 })}
-                  className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-                  placeholder="1200"
-                />
-                {errors.price && <p className="text-red-500 text-sm mt-2">Valid price required</p>}
+                <label className={labelClass}><FaMapMarkerAlt className="text-primary"/> From</label>
+                <input type="text" {...register("from", { required: true })} className={inputClass} placeholder="Departure Point" />
               </div>
               <div>
-                <label className="text-lg font-semibold text-gray-700 mb-2">Ticket Quantity</label>
-                <input
-                  type="number"
-                  {...register("ticketQuantity", { required: "Quantity is required", min: 1 })}
-                  className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-                  placeholder="50"
-                />
-                {errors.ticketQuantity && <p className="text-red-500 text-sm mt-2">Valid quantity required</p>}
+                <label className={labelClass}><FaMapMarkerAlt className="text-secondary"/> To</label>
+                <input type="text" {...register("to", { required: true })} className={inputClass} placeholder="Destination Point" />
+              </div>
+
+              {/* Transport & Schedule */}
+              <div>
+                <label className={labelClass}><FaBus className="text-primary"/> Transport Type</label>
+                <select {...register("transportType", { required: true })} className={inputClass}>
+                  <option value="Bus">Bus</option>
+                  <option value="Train">Train</option>
+                  <option value="Launch">Launch</option>
+                  <option value="Plane">Plane</option>
+                </select>
+              </div>
+              <div>
+                <label className={labelClass}><FaCalendarAlt className="text-primary"/> Departure Date & Time</label>
+                <input type="datetime-local" {...register("departureDateTime", { required: true })} className={inputClass} />
+              </div>
+
+              {/* Pricing & Quantity */}
+              <div>
+                <label className={labelClass}><FaDollarSign className="text-primary"/> Price (BDT)</label>
+                <input type="number" {...register("price", { required: true })} className={inputClass} placeholder="0.00" />
+              </div>
+              <div>
+                <label className={labelClass}><FaListUl className="text-primary"/> Available Quantity</label>
+                <input type="number" {...register("ticketQuantity", { required: true })} className={inputClass} placeholder="e.g., 40" />
+              </div>
+
+              {/* Image URL */}
+              <div className="md:col-span-2">
+                <label className={labelClass}><FaImage className="text-primary"/> Thumbnail Image URL</label>
+                <input type="url" {...register("imageUrl", { required: true })} className={inputClass} placeholder="https://i.ibb.co/..." />
+              </div>
+
+              {/* Description Field (NEW) */}
+              <div className="md:col-span-2">
+                <label className={labelClass}><FaAlignLeft className="text-primary"/> Ticket Description</label>
+                <textarea 
+                  rows="4" 
+                  {...register("description", { required: "Description is required" })} 
+                  className={`${inputClass} resize-none`}
+                  placeholder="Describe details like bus model, boarding point specifics, or any rules..."
+                ></textarea>
+                {errors.description && <span className="text-error text-xs mt-1">{errors.description.message}</span>}
+              </div>
+
+              {/* Perks Selection */}
+              <div className="md:col-span-2">
+                <label className={labelClass}><FaCheck className="text-primary"/> Facilities / Perks</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
+                  {["AC", "Non-AC", "WiFi", "Lunch", "Water", "Blanket", "Charging Port", "Music"].map((perk) => (
+                    <label key={perk} className="flex items-center gap-2 p-3 rounded-xl border border-base-300 hover:bg-base-200 cursor-pointer transition-all">
+                      <input type="checkbox" value={perk} {...register("perks")} className="checkbox checkbox-primary checkbox-sm" />
+                      <span className="text-sm font-medium">{perk}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Vendor Info (Read-Only) */}
+              <div className="p-4 bg-base-200 rounded-2xl flex items-center gap-4">
+                 <FaUser className="text-primary" />
+                 <div>
+                   <p className="text-[10px] uppercase opacity-50 font-bold">Vendor Name</p>
+                   <p className="text-sm font-semibold">{user?.displayName}</p>
+                 </div>
+              </div>
+              <div className="p-4 bg-base-200 rounded-2xl flex items-center gap-4">
+                 <FaEnvelope className="text-primary" />
+                 <div>
+                   <p className="text-[10px] uppercase opacity-50 font-bold">Contact Email</p>
+                   <p className="text-sm font-semibold truncate">{user?.email}</p>
+                 </div>
               </div>
             </div>
 
-           
-            <div className="relative">
-              <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-2">
-                <FaCalendarAlt className="text-purple-600" /> Departure Date & Time
-              </label>
-              <input
-                type="datetime-local"
-                {...register("departureDateTime", { required: "Date & time is required" })}
-                className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-              />
-              {errors.departureDateTime && <p className="text-red-500 text-sm mt-2">{errors.departureDateTime.message}</p>}
-            </div>
-
-            
-            <div className="md:col-span-2">
-              <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-2">
-                <FaImage className="text-purple-600" /> Image URL (from ImgBB)
-              </label>
-              <input
-                type="url"
-                {...register("imageUrl", { required: "Image URL is required" })}
-                className="w-full px-4 py-4 rounded-xl border border-gray-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all duration-300 outline-none"
-                placeholder="https://i.ibb.co/..."
-              />
-              {errors.imageUrl && <p className="text-red-500 text-sm mt-2">{errors.imageUrl.message}</p>}
-            </div>
-
-          
-            <div className="md:col-span-2">
-              <label className="flex items-center gap-3 text-lg font-semibold text-gray-700 mb-4">
-                <FaCheck className="text-purple-600" /> Select Perks
-              </label>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {["AC", "Non-AC", "Breakfast", "WiFi", "Lunch", "Dinner", "Charging Port", "Entertainment"].map((perk) => (
-                  <label key={perk} className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      value={perk}
-                      {...register("perks")}
-                      className="hidden"
-                    />
-                    <div className="w-7 h-7 rounded-lg border-2 border-gray-300 group-hover:border-purple-500 transition-all duration-300 flex items-center justify-center">
-                      <FaCheck className="text-purple-600 text-sm opacity-0 group-has-[:checked]:opacity-100 transition-opacity" />
-                    </div>
-                    <span className="text-gray-700 group-hover:text-purple-600 transition-colors">{perk}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-          
-            <div className="flex items-center gap-3">
-              <FaUser className="text-purple-600 text-xl" />
-              <input
-                type="text"
-                defaultValue={user?.displayName || ""}
-                readOnly
-                className="w-full px-4 py-4 rounded-xl bg-gray-100 text-gray-700 cursor-not-allowed"
-              />
-            </div>
-            <div className="flex items-center gap-3">
-              <FaEnvelope className="text-purple-600 text-xl" />
-              <input
-                type="email"
-                defaultValue={user?.email || ""}
-                readOnly
-                className="w-full px-4 py-4 rounded-xl bg-gray-100 text-gray-700 cursor-not-allowed"
-              />
-            </div>
-
-         
-            <div className="md:col-span-2 text-center mt-8">
+            {/* Submit Button */}
+            <div className="pt-6">
               <button
                 type="submit"
-                className="w-full md:w-auto px-16 py-5 btn bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-xl rounded-full shadow-2xl hover:shadow-purple-600 transform hover:scale-105 transition-all duration-300"
+                className="w-full py-4 bg-primary hover:bg-primary-focus text-primary-content font-bold text-lg rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98]"
               >
-                Add Ticket Now
+                Publish Ticket
               </button>
             </div>
           </form>

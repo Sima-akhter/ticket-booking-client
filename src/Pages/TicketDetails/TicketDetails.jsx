@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import {
-  FaBus,
-  FaTrain,
-  FaPlane,
-  FaShip,
-  FaClock,
-  FaMapMarkerAlt,
-  FaCalendarAlt,
-  FaTicketAlt,
+  FaBus, FaTrain, FaPlane, FaShip, FaClock,
+  FaMapMarkerAlt, FaCalendarAlt, FaTicketAlt,
+  FaCheckCircle, FaInfoCircle
 } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const TicketDetails = () => {
   const { id } = useParams();
@@ -21,8 +17,8 @@ const TicketDetails = () => {
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [timeLeft, setTimeLeft] = useState("");
 
-  
   useEffect(() => {
     fetch(`https://server-kappa-lemon.vercel.app/tickets/${id}`)
       .then((res) => res.json())
@@ -35,61 +31,44 @@ const TicketDetails = () => {
         setLoading(false);
       });
   }, [id]);
-console.log(ticket)
-  
+
+  // রিয়েল-টাইম কাউন্টডাউন আপডেট
+  useEffect(() => {
+    if (!ticket?.departureDateTime) return;
+
+    const timer = setInterval(() => {
+      const now = new Date();
+      const diff = new Date(ticket.departureDateTime) - now;
+
+      if (diff <= 0) {
+        setTimeLeft("Departed");
+        clearInterval(timer);
+      } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / 1000 / 60) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        setTimeLeft(`${days}d ${hours}h ${mins}m ${secs}s`);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [ticket]);
+
   const getTransportIcon = (type) => {
+    const iconClass = "text-5xl text-white";
     switch (type?.toLowerCase()) {
-      case "bus":
-        return <FaBus className="text-6xl text-white" />;
-      case "train":
-        return <FaTrain className="text-6xl text-white" />;
-      case "plane":
-        return <FaPlane className="text-6xl text-white" />;
-      case "launch":
-        return <FaShip className="text-6xl text-white" />;
-      default:
-        return <FaBus className="text-6xl text-white" />;
+      case "bus": return <FaBus className={iconClass} />;
+      case "train": return <FaTrain className={iconClass} />;
+      case "plane": return <FaPlane className={iconClass} />;
+      case "launch": return <FaShip className={iconClass} />;
+      default: return <FaBus className={iconClass} />;
     }
   };
 
-const getCountdown = () => {
-  if (!ticket?.departureDateTime) return "N/A";
-
-  const now = new Date();
-  const diff = new Date(ticket.departureDateTime) - now;
-
-  if (diff <= 0) {
-    return <span className="text-red-600 font-bold">Departed</span>;
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor(
-    (diff % (1000 * 60 * 60)) / (1000 * 60)
-  );
-  const seconds = Math.floor(
-    (diff % (1000 * 60)) / 1000
-  );
-
-  return (
-    <span className="text-green-600 font-bold">
-      {days}d {hours}h {minutes}m {seconds}s left
-    </span>
-  );
-};
-
-
- console.log(getCountdown())
   const handleBooking = async () => {
-    if (quantity < 1) {
-      alert("Quantity must be at least 1");
-      return;
-    }
-console.log(quantity, ticket)
-    if (quantity > ticket.ticketQuantity) {
-      alert("Not enough seats available");
+    if (quantity < 1 || quantity > ticket.ticketQuantity) {
+      Swal.fire("Error", "Invalid quantity selected", "error");
       return;
     }
 
@@ -101,158 +80,146 @@ console.log(quantity, ticket)
       unitPrice: ticket.price,
       bookingQuantity: Number(quantity),
       totalPrice: ticket.price * quantity,
-      vendorEmail:ticket.vendorEmail,
+      vendorEmail: ticket.vendorEmail,
       status: "pending",
     };
 
     try {
       const res = await axiosSecure.post("/bookings", bookingInfo);
-
       if (res.data?.insertedId) {
         document.getElementById("book_modal").close();
-        alert("Booking request sent successfully!");
+        Swal.fire("Success", "Booking request sent!", "success");
         navigate("/dashboard/myBookedTickets");
       }
     } catch (error) {
-      console.error(error);
-      alert("Unauthorized! Please login again.");
+      Swal.fire("Oops!", "Booking failed. Login required.", "error");
     }
   };
 
-  
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
-
-  
-  if (!ticket) {
-    return (
-      <p className="text-center text-3xl text-red-600 mt-20">
-        Ticket not found!
-      </p>
-    );
-  }
+  if (loading) return <div className="h-screen flex justify-center items-center"><span className="loading loading-spinner loading-lg text-primary"></span></div>;
+  if (!ticket) return <div className="text-center py-20 text-error font-bold">Ticket not found!</div>;
 
   return (
-    <>
-      <section className="py-16 px-4 bg-gradient-to-br from-purple-50 via-pink-50 to-white min-h-screen">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12">
-         
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative rounded-3xl overflow-hidden shadow-2xl"
+    <section className="min-h-screen py-24 px-4 bg-base-200 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-10 items-start">
+          
+          {/* Left Side: Image & Price Tag */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }} 
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative group"
           >
-            <img
-              src={ticket.imageUrl}
-              alt={ticket.ticketTitle}
-              className="w-full h-full min-h-96 object-cover"
-            />
-
-            <div className="absolute top-6 left-6 bg-white/20 p-6 rounded-full backdrop-blur">
+            <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
+              <img src={ticket.imageUrl} alt={ticket.ticketTitle} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            </div>
+            
+            <div className="absolute top-6 left-6 bg-primary/80 backdrop-blur-md p-5 rounded-3xl">
               {getTransportIcon(ticket.transportType)}
             </div>
 
-            <div className="absolute bottom-6 left-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl text-4xl font-bold">
-              TK{ticket.price}
-              <span className="block text-lg font-normal">per ticket</span>
+            <div className="absolute -bottom-6 right-6 bg-base-100 p-6 rounded-3xl shadow-xl border border-primary/20">
+              <p className="text-sm text-base-content/60 font-medium">Price Starts From</p>
+              <h3 className="text-4xl font-black text-primary">TK {ticket.price}</h3>
             </div>
           </motion.div>
 
-          
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
+          {/* Right Side: Details */}
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }} 
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6"
           >
-            <h1 className="text-5xl font-extrabold">{ticket.ticketTitle}</h1>
+            <div className="badge badge-primary badge-outline font-bold uppercase tracking-widest">{ticket.transportType}</div>
+            <h1 className="text-4xl md:text-5xl font-black text-base-content">{ticket.ticketTitle}</h1>
+            
+            <div className="flex items-center gap-4 text-xl font-semibold text-base-content/70">
+              <div className="flex items-center gap-2 bg-base-100 px-4 py-2 rounded-xl shadow-sm">
+                <FaMapMarkerAlt className="text-primary" /> {ticket.from}
+              </div>
+              <span className="text-primary">→</span>
+              <div className="flex items-center gap-2 bg-base-100 px-4 py-2 rounded-xl shadow-sm">
+                <FaMapMarkerAlt className="text-secondary" /> {ticket.to}
+              </div>
+            </div>
 
-            <p className="text-2xl flex items-center gap-3">
-              <FaMapMarkerAlt className="text-purple-600" />
-              {ticket.from} → {ticket.to}
-            </p>
-
-            <div className="grid grid-cols-2 gap-6 bg-white p-6 rounded-2xl shadow">
-              <div>
-                <p className="text-gray-500">Available Seats</p>
-                <p className="text-2xl font-bold">
-                  {ticket.ticketQuantity}
+            {/* Quick Info Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="bg-base-100 p-4 rounded-2xl shadow-sm border border-base-300">
+                <p className="text-xs opacity-50 uppercase font-bold">Seats Left</p>
+                <p className="text-xl font-bold">{ticket.ticketQuantity}</p>
+              </div>
+              <div className="bg-base-100 p-4 rounded-2xl shadow-sm border border-base-300">
+                <p className="text-xs opacity-50 uppercase font-bold">Status</p>
+                <p className="text-xl font-bold text-green-500">Active</p>
+              </div>
+              <div className="bg-base-100 p-4 rounded-2xl shadow-sm border border-base-300 col-span-2 sm:col-span-1">
+                <p className="text-xs opacity-50 uppercase font-bold">Departure In</p>
+                <p className={`text-lg font-bold ${timeLeft === "Departed" ? "text-error" : "text-primary"}`}>
+                  <FaClock className="inline mr-1" /> {timeLeft}
                 </p>
               </div>
+            </div>
 
-              <div>
-                <p className="text-gray-500">Departure</p>
-                <p className="font-bold">
-                  {ticket.departureDate} | {ticket.departureTime}
-                </p>
-              </div>
+            {/* Description Section */}
+            <div className="bg-base-100 p-6 rounded-3xl shadow-sm border border-base-300">
+              <h4 className="flex items-center gap-2 text-lg font-bold mb-3">
+                <FaInfoCircle className="text-primary" /> Description
+              </h4>
+              <p className="text-base-content/70 leading-relaxed">
+                {ticket.description || "No specific details provided for this journey. Please contact the vendor for more information regarding boarding and luggage."}
+              </p>
+            </div>
 
-              <div className="col-span-2 flex items-center gap-3">
-                <FaClock className="text-purple-600" />
-                {getCountdown()}
-              </div>
+            {/* Perks */}
+            <div className="flex flex-wrap gap-2">
+              {ticket.perks?.map((perk, idx) => (
+                <span key={idx} className="badge badge-ghost p-4 gap-2 border-base-300">
+                  <FaCheckCircle className="text-green-500" /> {perk}
+                </span>
+              ))}
             </div>
 
             <button
-              onClick={() =>
-                document.getElementById("book_modal").showModal()
-              }
-              className="w-full btn bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xl py-4 rounded-2xl"
+              onClick={() => document.getElementById("book_modal").showModal()}
+              className="w-full btn btn-primary btn-lg rounded-2xl font-bold shadow-lg shadow-primary/20"
             >
-              Book Now
+              Book This Ticket
             </button>
           </motion.div>
         </div>
-      </section>
+      </div>
 
-     
-      <dialog id="book_modal" className="modal">
-        <div className="modal-box">
-          <h3 className="text-2xl font-bold mb-4">Confirm Booking</h3>
+      {/* Booking Modal */}
+      <dialog id="book_modal" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box bg-base-100 border border-base-300 rounded-3xl">
+          <h3 className="text-2xl font-black mb-4">Confirm Your Booking</h3>
+          
+          <div className="space-y-3 bg-base-200 p-5 rounded-2xl mb-6">
+            <p className="flex justify-between"><span>Route:</span> <strong>{ticket.from} - {ticket.to}</strong></p>
+            <p className="flex justify-between"><span>Unit Price:</span> <strong>TK {ticket.price}</strong></p>
+            <p className="flex justify-between border-t border-base-300 pt-2 text-primary">
+              <span>Total Cost:</span> <strong className="text-xl">TK {ticket.price * quantity}</strong>
+            </p>
+          </div>
 
-          <p>
-            <strong>Route:</strong> {ticket.from} → {ticket.to}
-          </p>
-
-          <p className="mb-4">
-            <strong>Price:</strong> TK{ticket.price} per seat
-          </p>
-
+          <label className="label text-sm font-bold opacity-70">SELECT SEATS QUANTITY</label>
           <input
             type="number"
             min="1"
             max={ticket.ticketQuantity}
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
-            className="input input-bordered w-full mb-4"
+            className="input input-bordered input-primary w-full text-lg font-bold rounded-xl"
           />
 
           <div className="modal-action">
-            <button
-              className="btn btn-outline"
-              onClick={() =>
-                document.getElementById("book_modal").close()
-              }
-            >
-              Cancel
-            </button>
-
-            <button
-              onClick={handleBooking}
-              className="btn bg-purple-600 text-white"
-            >
-              Confirm Booking
-            </button>
+            <button className="btn btn-ghost" onClick={() => document.getElementById("book_modal").close()}>Cancel</button>
+            <button onClick={handleBooking} className="btn btn-primary px-8">Confirm Booking</button>
           </div>
         </div>
       </dialog>
-    </>
+    </section>
   );
 };
 

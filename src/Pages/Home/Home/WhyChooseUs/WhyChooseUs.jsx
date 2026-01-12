@@ -1,69 +1,89 @@
+
 import React from 'react';
+import { Link } from 'react-router';
 import { FaTicketAlt, FaLock, FaCheckCircle, FaHeadset } from "react-icons/fa";
 
 const WhyChooseUs = () => {
   const features = [
     {
       title: "Easy Booking",
-      desc: "Book your tickets in just a few clicks with our intuitive and smooth interface.",
+      desc: "Book your tickets in just a few clicks with our clean, intuitive, and mobile-friendly interface.",
       icon: <FaTicketAlt className="text-5xl" />,
     },
     {
       title: "Secure Payment",
-      desc: "100% secure transactions with encrypted payment gateways you can trust.",
+      desc: "100% secure transactions with industry-standard encryption and trusted payment gateways.",
       icon: <FaLock className="text-5xl" />,
     },
     {
-      title: "Trusted Vendors",
-      desc: "Partnered only with verified and reliable transport providers across the country.",
+      title: "Trusted Partners",
+      desc: "We work only with verified, licensed, and highly-rated transport operators across Bangladesh.",
       icon: <FaCheckCircle className="text-5xl" />,
     },
     {
       title: "24/7 Support",
-      desc: "Dedicated customer support team available round the clock for any assistance.",
+      desc: "Round-the-clock customer support via phone, chat, and email – we're always here for you.",
       icon: <FaHeadset className="text-5xl" />,
     },
   ];
 
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-purple-50 to-pink-50 overflow-hidden">
+    <section className="my-10 lg:py-24 px-4 ">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-6xl font-extrabold text-center mb-6">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-600">
-            Why Choose TicketBari?
-          </span>
-        </h2>
-        <p className="text-center text-gray-700 text-lg mb-16 max-w-3xl mx-auto">
-          We make travel planning simple, secure, and enjoyable – your perfect journey starts here!
-        </p>
+        {/* Heading */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
+            <span className="text-3xl font-bold text-center mb-6">
+              Why Choose TicketBari?
+            </span>
+          </h2>
+          <p className="text-base-content/70 text-lg md:text-xl max-w-3xl mx-auto">
+            Simple. Secure. Reliable. Your stress-free travel experience starts here.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {features.map((item, index) => (
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-4 transition-all duration-500 text-center border border-purple-100"
+              className="group relative bg-base-100 rounded-2xl p-8 shadow-md hover:shadow-xl 
+                         border border-base-300 hover:border-primary/40 
+                         transition-all duration-300 overflow-hidden"
             >
-              {/* Gradient Circle Background for Icon */}
-              <div className="relative inline-block mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative bg-white rounded-full p-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                  <div className="text-purple-600 group-hover:text-purple-700">
-                    {item.icon}
+              {/* Icon Container */}
+              <div className="relative inline-flex items-center justify-center w-20 h-20 mx-auto mb-6">
+                <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl 
+                               group-hover:bg-primary/20 transition-all duration-500"></div>
+                <div className="relative bg-base-100 rounded-full p-5 shadow-inner 
+                               group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-primary group-hover:text-primary-focus transition-colors">
+                    {feature.icon}
                   </div>
                 </div>
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-purple-700 transition-colors duration-300">
-                {item.title}
+              {/* Title */}
+              <h3 className="text-xl lg:text-2xl font-bold text-base-content mb-4 
+                            group-hover:text-primary transition-colors text-center">
+                {feature.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {item.desc}
+
+              {/* Description */}
+              <p className="text-base-content/75 leading-relaxed text-center text-sm lg:text-base">
+                {feature.desc}
               </p>
 
-              {/* Subtle Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-500"></div>
+              {/* Very subtle background hover effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 
+                             opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </div>
           ))}
+        </div>
+
+        {/* Optional CTA at bottom */}
+        <div className="text-center mt-16">
+         
         </div>
       </div>
     </section>

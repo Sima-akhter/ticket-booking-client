@@ -1,13 +1,15 @@
 import React from 'react'
-import logo from '../../assets/ticketLogo.png'
+
 import { Link } from 'react-router'
+import { FaCar } from "react-icons/fa6";
 
 const Logo = () => {
   return (
     <Link to='/'>
     <div className='flex items-center gap-2'>
-        <img className='w-[70px] rounded-full' src={logo} alt="" />
-        <span className="text-3xl font-extrabold text-white tracking-wide">
+        
+        <FaCar className='text-3xl text-blue-600'/>
+        <span className="text-2xl font-extrabold  tracking-wide">
                     TicketBari
                   </span>
     </div>

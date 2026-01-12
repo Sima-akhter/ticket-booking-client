@@ -32,6 +32,7 @@ import AboutUs from "../Pages/About/AboutUs";
 import AdminAdvertiseTickets from "../Pages/Dashboard/Admin/AdminAdvertiseTickets";
 import Error from "../Pages/Error";
 
+
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -60,7 +61,9 @@ export const router = createBrowserRouter([
             {
                 path: 'aboutUs',
                 element: <AboutUs></AboutUs>
-            }
+            },
+
+        
 
         ]
     },
@@ -84,7 +87,7 @@ export const router = createBrowserRouter([
 
                 path: 'allTickets',
 
-                element: <PrivateRoute><AllTickets></AllTickets></PrivateRoute>
+                element: <AllTickets></AllTickets>
 
             },
 

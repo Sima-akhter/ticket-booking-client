@@ -14,14 +14,14 @@ const LatestTickets = () => {
   return (
     <div className="my-10">
       <h2 className="text-3xl font-bold text-center mb-6">
-         Advertisement Tickets
+         Latest Tickets
       </h2>
 
       {tickets.length === 0 && (
         <p className="text-center">No advertised tickets found</p>
       )}
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {tickets.map(ticket => (
           <TicketCard key={ticket._id} ticket={ticket} />
         ))}

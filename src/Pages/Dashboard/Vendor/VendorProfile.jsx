@@ -1,12 +1,12 @@
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaUserTie, FaEnvelope, FaStore } from "react-icons/fa";
+import { FaUserTie, FaEnvelope, FaStore, FaEdit } from "react-icons/fa";
 
 const VendorProfile = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-
   const { data: vendor = {}, isLoading } = useQuery({
     queryKey: ["vendor-profile", user?.email],
     enabled: !!user?.email,
@@ -16,53 +16,38 @@ const VendorProfile = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <p className="text-gray-500 text-lg">Loading vendor profile...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <div className="h-64 flex justify-center items-center"><span className="loading loading-spinner text-primary"></span></div>;
 
   return (
-    <div className="flex justify-center mt-10">
-      <div className="bg-white shadow-xl rounded-3xl p-8 w-full max-w-lg border border-gray-200">
-        {/* Profile Image */}
-        <div className="flex justify-center -mt-16">
-          <img
-            src={vendor?.photoURL || "/default-avatar.png"}
-            alt="Vendor"
-            className="w-32 h-32 rounded-full border-4 border-green-500 shadow-lg object-cover"
-          />
-        </div>
-
-        {/* Name */}
-        <h2 className="text-2xl font-extrabold text-center mt-4 text-gray-800">
-          {vendor?.name || "Vendor Name"}
-        </h2>
-
-        {/* Role */}
-        <p className="flex justify-center items-center mt-2 text-green-600 font-semibold gap-2">
-          <FaUserTie /> {vendor?.role || "Vendor"}
-        </p>
-
-        {/* Email */}
-        <div className="mt-6">
-          <h3 className="text-gray-500 font-medium flex items-center gap-2">
-            <FaEnvelope /> Email
-          </h3>
-          <p className="text-gray-700 text-lg">{vendor?.email || "vendor@example.com"}</p>
-        </div>
-
-        {/* Company / Shop Name */}
-        {vendor?.companyName && (
-          <div className="mt-4 flex justify-center items-center gap-2 text-gray-600">
-            <FaStore /> <span>{vendor.companyName}</span>
+    <div className="min-h-screen bg-base-200/50 py-10 px-4">
+      <div className="max-w-3xl mx-auto rounded-2xl bg-base-100 shadow-md overflow-hidden border border-base-300">
+        <div className="h-32 w-full bg-primary/10 border-b border-base-200" />
+        <div className="px-8 pb-10">
+          <div className="flex justify-center -mt-16">
+            <img src={vendor?.photoURL || "/default-avatar.png"} className="w-32 h-32 rounded-2xl ring-4 ring-base-100 shadow-xl object-cover" />
           </div>
-        )}
+          <div className="text-center mt-4">
+            <h2 className="text-2xl font-black text-base-content uppercase">{vendor?.name}</h2>
+            <p className="text-primary font-bold text-xs uppercase tracking-widest mt-1 flex justify-center items-center gap-2">
+              <FaUserTie /> {vendor?.role || "Vendor Partner"}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+            <div className="p-5 bg-base-200/50 rounded-xl border border-base-300 flex items-center gap-4">
+              <div className="text-primary text-xl opacity-40"><FaEnvelope /></div>
+              <div><p className="text-[10px] font-black opacity-50 uppercase">Email</p><p className="font-bold text-sm">{vendor?.email}</p></div>
+            </div>
+            <div className="p-5 bg-base-200/50 rounded-xl border border-base-300 flex items-center gap-4">
+              <div className="text-primary text-xl opacity-40"><FaStore /></div>
+              <div><p className="text-[10px] font-black opacity-50 uppercase">Business</p><p className="font-bold text-sm">{vendor?.companyName || "Independent"}</p></div>
+            </div>
+          </div>
+          <button className="w-full mt-8 bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+             Update Profile Info →
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-
 export default VendorProfile;
